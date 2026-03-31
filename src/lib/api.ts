@@ -187,3 +187,88 @@ export async function fetchDomains(): Promise<OptionItem[]> {
   }
 }
 
+// ── Application & Resume APIs ────────────────────────────────
+
+export async function uploadFile(file: File): Promise<{ downloadUrl: string; originalFileName: string } | null> {
+  const formData = new FormData();
+  formData.append("files", file);
+  try {
+    const res = await fetch(`${BASE_URL}/files/upload`, {
+      method: "POST",
+      body: formData,
+    });
+    if (!res.ok) throw new Error("File upload failed");
+    const json = await res.json();
+    const data = json?.data || json;
+    const uploadedFile = Array.isArray(data) ? data[0] : data;
+    return uploadedFile || null;
+  } catch (err) {
+    console.error("uploadFile error:", err);
+    throw err;
+  }
+}
+
+export async function uploadPublicResume(payload: { resumeName: string; fileName: string; resumeUrl: string }): Promise<number> {
+  try {
+    const res = await fetch(`${BASE_URL}${API_VERSION}/resumes/upload`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const errorJson = await res.json().catch(() => null);
+      throw new Error(errorJson?.message || "Failed to register resume");
+    }
+    const json = await res.json();
+    return json?.data?.id || json?.id;
+  } catch (err) {
+    console.error("uploadPublicResume error:", err);
+    throw err;
+  }
+}
+
+export async function publicApplyJob(payload: {
+  jobId: number;
+  resumeId: number;
+  fullName: string;
+  phone: string;
+  email: string;
+  coverLetter?: string;
+  appliedAt: string;
+  answers: any[];
+}): Promise<boolean> {
+  try {
+    const res = await fetch(`${BASE_URL}${API_VERSION}/applications/public-apply`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const errorJson = await res.json().catch(() => null);
+      throw new Error(errorJson?.message || "Failed to apply for job");
+    }
+    return true;
+  } catch (err) {
+    console.error("publicApplyJob error:", err);
+    throw err;
+  }
+}
+
+export interface JobQuestion {
+  id: number;
+  content: string;
+  isRequired: boolean;
+}
+
+export async function fetchJobQuestions(jobId: number): Promise<JobQuestion[]> {
+  try {
+    const res = await fetch(`${BASE_URL}${API_VERSION}/jobs/${jobId}/questions?page=0&size=100`);
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json?.data?.content || json?.content || json?.data || [];
+  } catch (err) {
+    console.error("fetchJobQuestions error:", err);
+    return [];
+  }
+}
+
