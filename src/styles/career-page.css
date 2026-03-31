@@ -1,0 +1,113 @@
+/* ============================================================
+   Career Page Styles — sma-career
+   ============================================================ */
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Base page styles */
+.career-page {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  header {
+    padding: 12px 20px !important;
+  }
+
+  header nav {
+    gap: 16px !important;
+  }
+
+  footer > div {
+    flex-direction: column !important;
+    text-align: left !important;
+  }
+
+  footer > div > div:last-child {
+    text-align: left !important;
+  }
+}
+
+@media (max-width: 640px) {
+  header nav {
+    display: none !important;
+  }
+}
+
+/* Hover effects for interactive elements */
+a:hover {
+  opacity: 0.85;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* Card hover effects */
+section > div > div > div:hover {
+  transform: translateY(-2px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Focus styles for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Animation utilities */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+section {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* Print styles */
+@media print {
+  header {
+    position: static !important;
+  }
+
+  section {
+    break-inside: avoid;
+  }
+}
