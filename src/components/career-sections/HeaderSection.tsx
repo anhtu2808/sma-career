@@ -41,15 +41,13 @@ export default function HeaderSection({ theme, headerConfig, companyName = 'Comp
 
   return (
     <header style={{
-      background: backgroundColor,
+      background: '#fff',
       padding: '16px 40px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
       borderBottom: '1px solid rgba(0,0,0,0.08)',
-      position: 'sticky',
-      top: 0,
-      zIndex: 100,
+      ...(headerConfig.sticky ? { position: 'sticky', top: 0, zIndex: 100 } : {}),
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         {logoUrl ? (

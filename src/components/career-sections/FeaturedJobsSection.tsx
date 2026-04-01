@@ -11,7 +11,7 @@ interface FeaturedJobsSectionProps {
   settings: LayoutSectionSettings;
 }
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 5;
 
 const JOB_LEVEL_MAP: Record<string, string> = {
   INTERN: "Intern", FRESHER: "Fresher", JUNIOR: "Junior",

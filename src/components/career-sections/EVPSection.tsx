@@ -50,7 +50,7 @@ export default function EVPSection({ theme, sectionProps = {}, settings = {} }: 
       }}>
         {items.filter(b => b.isVisible !== false).map((b, i) => (
           <div key={i} style={{
-            background: backgroundColor,
+            background: '#fff',
             borderRadius: `${borderRadius}px`,
             padding: '28px 24px',
             textAlign: 'left',
