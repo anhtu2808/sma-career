@@ -33,6 +33,15 @@ import {
   faChartLine,
   faMedal,
 } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFacebook,
+  faLinkedin,
+  faYoutube,
+  faTiktok,
+  faInstagram,
+  faGithub,
+  faTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 
 export const materialToFA: Record<string, IconDefinition> = {
   // Common EVP icons
@@ -68,6 +77,16 @@ export const materialToFA: Record<string, IconDefinition> = {
   "dollar-sign": faCreditCard,
   home: faCity,
   "trending-up": faArrowTrendUp,
+
+  // Brands
+  facebook: faFacebook,
+  linkedin: faLinkedin,
+  youtube: faYoutube,
+  tiktok: faTiktok,
+  instagram: faInstagram,
+  github: faGithub,
+  twitter: faTwitter,
+  x: faTwitter,
 };
 
 /**

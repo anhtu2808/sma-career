@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { Select, Slider, ConfigProvider, Modal, Form, Input, Upload, Button, message } from "antd";
 import type { FlatTheme, LayoutSectionSettings } from "@/types/career-page";
-import { fetchJobs, fetchSkills, fetchExpertises, fetchDomains, uploadFile, uploadPublicResume, publicApplyJob, fetchJobQuestions, type JobApiItem, type JobQuestion } from "@/lib/api";
+import { fetchJobs, fetchSkills, fetchExpertises, fetchDomains, uploadFile, uploadPublicResume, publicApplyJob, fetchJobQuestions, fetchJobDetail, type JobApiItem, type JobQuestion, type JobDetailData } from "@/lib/api";
 
 interface FeaturedJobsSectionProps {
   theme: FlatTheme;
@@ -69,6 +69,11 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [jobQuestions, setJobQuestions] = useState<JobQuestion[]>([]);
   const [isFetchingQuestions, setIsFetchingQuestions] = useState(false);
+
+  // ─── Detail Modal State ─────────────────────────────────
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
+  const [jobDetail, setJobDetail] = useState<JobDetailData | null>(null);
+  const [isFetchingDetail, setIsFetchingDetail] = useState(false);
 
   // ─── Fetch jobs from API ─────────────────────────────────
   const loadJobs = useCallback(async () => {
@@ -183,6 +188,15 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
     const questions = await fetchJobQuestions(job.id);
     setJobQuestions(questions);
     setIsFetchingQuestions(false);
+  };
+
+  const handleViewDetail = async (job: JobApiItem) => {
+    setDetailModalOpen(true);
+    setJobDetail(null);
+    setIsFetchingDetail(true);
+    const detail = await fetchJobDetail(job.id);
+    setJobDetail(detail);
+    setIsFetchingDetail(false);
   };
 
   const handleModalClose = () => {
@@ -547,10 +561,22 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                       {formatSalary(job.salaryStart, job.salaryEnd)}
                     </div>
                     <button
+                      onClick={() => handleViewDetail(job)}
+                      style={{
+                        marginTop: "8px", padding: "6px 16px", fontSize: "12px",
+                        borderRadius: `${borderRadius}px`, fontWeight: 600,
+                        cursor: "pointer", transition: "all 0.2s",
+                        background: "transparent", color: primaryColor,
+                        border: `1.5px solid ${primaryColor}`, display: "block",
+                        width: "100%", textAlign: "center",
+                      }}
+                    >View Detail</button>
+                    <button
                       onClick={() => handleApplyClick(job)}
                       style={{
                         ...(btnStyles[buttonStyle] || btnStyles.flat),
-                        marginTop: "8px", padding: "6px 16px", fontSize: "12px",
+                        marginTop: "6px", padding: "6px 16px", fontSize: "12px",
+                        display: "block", width: "100%", textAlign: "center",
                       }}
                     >Apply Now</button>
                   </div>
@@ -620,7 +646,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
         open={applyModalOpen}
         onCancel={handleModalClose}
         footer={null}
-        destroyOnClose
+        destroyOnHidden
       >
         <Form form={form} layout="vertical" onFinish={handleApplySubmit} style={{ marginTop: 16 }}>
           <Form.Item name="fullName" label="Full Name" rules={[{ required: true, message: "Please enter your full name" }]}>
@@ -725,6 +751,268 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
             </Button>
           </div>
         </Form>
+      </Modal>
+
+      {/* ─── Job Detail Modal ───────────────────────────────────────── */}
+      <Modal
+        title={null}
+        open={detailModalOpen}
+        onCancel={() => setDetailModalOpen(false)}
+        footer={null}
+        destroyOnHidden
+        width={720}
+        styles={{ body: { padding: 0, maxHeight: "80vh", overflowY: "auto" } }}
+      >
+        {isFetchingDetail ? (
+          <div style={{ padding: "60px 0", textAlign: "center" }}>
+            <div style={{
+              width: 40, height: 40, border: `3px solid ${primaryColor}20`, borderTopColor: primaryColor,
+              borderRadius: "50%", animation: "spin 0.8s linear infinite", margin: "0 auto 16px"
+            }} />
+            <div style={{ color: "#6b7280", fontSize: 14 }}>Loading job details...</div>
+            <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+          </div>
+        ) : jobDetail ? (
+          <div style={{ fontFamily: theme.fontFamily }}>
+            {/* Header */}
+            <div style={{
+              padding: "28px 32px 24px", borderBottom: "1px solid #f0f0f0",
+              display: "flex", alignItems: "flex-start", gap: 20,
+            }}>
+              {/* Logo */}
+              <div style={{
+                width: 56, height: 56, borderRadius: `${borderRadius}px`, flexShrink: 0,
+                background: jobDetail.company?.logo
+                  ? `url(${jobDetail.company.logo}) center/contain no-repeat`
+                  : `linear-gradient(135deg, ${primaryColor}15, ${primaryColor}30)`,
+                border: "1px solid #f0f0f0",
+              }} />
+              <div style={{ flex: 1 }}>
+                <h2 style={{ fontSize: 22, fontWeight: 800, color: textColor, margin: 0, lineHeight: 1.3 }}>
+                  {jobDetail.name}
+                </h2>
+                <div style={{ fontSize: 14, color: "#6b7280", marginTop: 4 }}>
+                  {jobDetail.company?.name}
+                  {jobDetail.uploadTime && (
+                    <span style={{ marginLeft: 8, fontSize: 12, opacity: 0.7 }}>
+                      · Posted {new Date(jobDetail.uploadTime).toLocaleDateString()}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Meta chips */}
+            <div style={{
+              padding: "16px 32px", display: "flex", flexWrap: "wrap", gap: 10,
+              borderBottom: "1px solid #f0f0f0", fontSize: 13, color: "#374151",
+            }}>
+              {jobDetail.locations && jobDetail.locations.length > 0 && (
+                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <span style={{ color: primaryColor }}>📍</span>
+                  {jobDetail.locations.map(l => l.city || l.name).filter(Boolean).join(", ")}
+                </span>
+              )}
+              {(jobDetail.salaryStart || jobDetail.salaryEnd) && (
+                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <span style={{ color: primaryColor }}>💰</span>
+                  <span style={{ fontWeight: 700, color: primaryColor }}>
+                    {formatSalary(jobDetail.salaryStart, jobDetail.salaryEnd)}
+                  </span>
+                </span>
+              )}
+              {jobDetail.experienceTime !== undefined && jobDetail.experienceTime !== null && (
+                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <span style={{ color: primaryColor }}>⏱</span>
+                  {jobDetail.experienceTime} years experience
+                </span>
+              )}
+              {jobDetail.jobLevel && (
+                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <span style={{ color: primaryColor }}>🎯</span>
+                  {JOB_LEVEL_MAP[jobDetail.jobLevel] || jobDetail.jobLevel}
+                </span>
+              )}
+              {jobDetail.workingModel && (
+                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <span style={{ color: primaryColor }}>🏢</span>
+                  {WORKING_MODEL_MAP[jobDetail.workingModel] || jobDetail.workingModel}
+                </span>
+              )}
+              {jobDetail.expDate && (
+                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <span style={{ color: primaryColor }}>📅</span>
+                  Deadline: {new Date(jobDetail.expDate).toLocaleDateString()}
+                </span>
+              )}
+            </div>
+
+            {/* Skills / Expertise / Domain tags */}
+            <div style={{ padding: "16px 32px", borderBottom: "1px solid #f0f0f0" }}>
+              {jobDetail.skills && jobDetail.skills.length > 0 && (
+                <div style={{ marginBottom: 10 }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: "#6b7280", marginRight: 8 }}>Skills:</span>
+                  {jobDetail.skills.map(s => (
+                    <span key={s.id} style={{
+                      display: "inline-block", padding: "3px 12px", borderRadius: 6, fontSize: 12,
+                      fontWeight: 500, background: `${primaryColor}08`, color: primaryColor,
+                      border: `1px solid ${primaryColor}20`, marginRight: 6, marginBottom: 4,
+                    }}>{s.name}</span>
+                  ))}
+                </div>
+              )}
+              {jobDetail.expertise?.name && (
+                <div style={{ marginBottom: 10 }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: "#6b7280", marginRight: 8 }}>Job Expertise:</span>
+                  <span style={{
+                    display: "inline-block", padding: "3px 12px", borderRadius: 6, fontSize: 12,
+                    fontWeight: 600, background: "#EFF6FF", color: "#2563EB",
+                    border: "1px solid #BFDBFE", textDecoration: "none",
+                  }}>{jobDetail.expertise.name}</span>
+                </div>
+              )}
+              {jobDetail.domains && jobDetail.domains.length > 0 && (
+                <div>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: "#6b7280", marginRight: 8 }}>Job Domain:</span>
+                  {jobDetail.domains.map(d => (
+                    <span key={d.id} style={{
+                      display: "inline-block", padding: "3px 12px", borderRadius: 6, fontSize: 12,
+                      fontWeight: 600, background: "#F0FDF4", color: "#16A34A",
+                      border: "1px solid #BBF7D0", marginRight: 6,
+                    }}>{d.name}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Action Buttons */}
+            <div style={{ padding: "16px 32px", display: "flex", gap: 12, borderBottom: "1px solid #f0f0f0" }}>
+              <button
+                onClick={() => {
+                  setDetailModalOpen(false);
+                  const matchingJob = fetchedJobs.find(j => j.id === jobDetail.id);
+                  if (matchingJob) handleApplyClick(matchingJob);
+                }}
+                style={{
+                  flex: 1, padding: "12px 24px", borderRadius: `${borderRadius}px`,
+                  background: primaryColor, color: "#fff", fontSize: 15, fontWeight: 700,
+                  border: "none", cursor: "pointer", transition: "all 0.2s",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                }}
+              >
+                Apply Now <span style={{ fontSize: 13 }}>↗</span>
+              </button>
+            </div>
+
+            {/* Content Sections */}
+            <div style={{ padding: "24px 32px" }}>
+              {/* About */}
+              {jobDetail.about && (
+                <div style={{ marginBottom: 28 }}>
+                  <h3 style={{
+                    fontSize: 16, fontWeight: 800, color: textColor, marginBottom: 10,
+                    paddingBottom: 8, borderBottom: `2px solid ${primaryColor}15`,
+                  }}>About the Role</h3>
+                  <div
+                    style={{ fontSize: 14, color: "#374151", lineHeight: 1.75 }}
+                    dangerouslySetInnerHTML={{ __html: jobDetail.about }}
+                  />
+                </div>
+              )}
+
+              {/* Responsibilities */}
+              {jobDetail.responsibilities && (
+                <div style={{ marginBottom: 28 }}>
+                  <h3 style={{
+                    fontSize: 16, fontWeight: 800, color: textColor, marginBottom: 10,
+                    paddingBottom: 8, borderBottom: `2px solid ${primaryColor}15`,
+                  }}>Responsibilities</h3>
+                  <div
+                    style={{ fontSize: 14, color: "#374151", lineHeight: 1.75 }}
+                    dangerouslySetInnerHTML={{ __html: jobDetail.responsibilities }}
+                  />
+                </div>
+              )}
+
+              {/* Requirements */}
+              {jobDetail.requirement && (
+                <div style={{ marginBottom: 28 }}>
+                  <h3 style={{
+                    fontSize: 16, fontWeight: 800, color: textColor, marginBottom: 10,
+                    paddingBottom: 8, borderBottom: `2px solid ${primaryColor}15`,
+                  }}>Requirements</h3>
+                  <div
+                    style={{ fontSize: 14, color: "#374151", lineHeight: 1.75 }}
+                    dangerouslySetInnerHTML={{ __html: jobDetail.requirement }}
+                  />
+                </div>
+              )}
+
+              {/* Benefits */}
+              {jobDetail.benefits && jobDetail.benefits.length > 0 && (
+                <div style={{ marginBottom: 28 }}>
+                  <h3 style={{
+                    fontSize: 16, fontWeight: 800, color: textColor, marginBottom: 14,
+                    paddingBottom: 8, borderBottom: `2px solid ${primaryColor}15`,
+                  }}>What We Can Offer</h3>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    {jobDetail.benefits.map(b => (
+                      <div key={b.id} style={{
+                        padding: "14px 18px", borderRadius: `${borderRadius}px`,
+                        border: "1px solid #f0f0f0", background: "#FAFAFA",
+                        display: "flex", alignItems: "center", gap: 14,
+                      }}>
+                        <div style={{
+                          width: 36, height: 36, borderRadius: 8,
+                          background: `${primaryColor}12`, display: "flex",
+                          alignItems: "center", justifyContent: "center",
+                          fontSize: 16, color: primaryColor, flexShrink: 0,
+                        }}>
+                          {b.type === "FINANCIAL" ? "💵" : b.type === "HEALTH" ? "🏥" : b.type === "EDUCATION" ? "📚" : "✨"}
+                        </div>
+                        <div>
+                          <div style={{ fontSize: 14, fontWeight: 700, color: textColor }}>{b.name}</div>
+                          {b.description && (
+                            <div style={{ fontSize: 12, color: "#6b7280", marginTop: 2 }}>{b.description}</div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Location details */}
+              {jobDetail.locations && jobDetail.locations.length > 0 && (
+                <div>
+                  <h3 style={{
+                    fontSize: 16, fontWeight: 800, color: textColor, marginBottom: 14,
+                    paddingBottom: 8, borderBottom: `2px solid ${primaryColor}15`,
+                  }}>Office Locations</h3>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    {jobDetail.locations.map(loc => (
+                      <div key={loc.id} style={{
+                        padding: "14px 18px", borderRadius: `${borderRadius}px`,
+                        border: "1px solid #f0f0f0", background: "#FAFAFA",
+                      }}>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: textColor }}>{loc.name || loc.city}</div>
+                        {loc.address && (
+                          <div style={{ fontSize: 13, color: "#6b7280", marginTop: 4 }}>
+                            {[loc.address, loc.district, loc.city, loc.country].filter(Boolean).join(", ")}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div style={{ padding: "60px 0", textAlign: "center", color: "#9ca3af", fontSize: 14 }}>
+            Could not load job details. Please try again.
+          </div>
+        )}
       </Modal>
 
     </section>

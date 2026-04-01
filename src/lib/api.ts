@@ -80,6 +80,84 @@ export interface JobApiItem {
   isApplied?: boolean;
 }
 
+export interface JobBenefit {
+  id: number;
+  name: string;
+  description?: string;
+  type?: string;
+  companyId?: number;
+}
+
+export interface JobLocation {
+  id: number;
+  name?: string;
+  address?: string;
+  district?: string;
+  city?: string;
+  country?: string;
+  description?: string;
+  longitude?: number;
+  latitude?: number;
+  googleMapLink?: string;
+}
+
+export interface JobDetailData {
+  id: number;
+  name: string;
+  uploadTime?: string;
+  expDate?: string;
+  salaryStart?: number;
+  salaryEnd?: number;
+  currency?: string;
+  experienceTime?: number;
+  status?: string;
+  jobLevel?: string;
+  workingModel?: string;
+  expertise?: { id: number; name?: string };
+  company?: {
+    id?: number;
+    name?: string;
+    country?: string;
+    companyIndustry?: string;
+    link?: string;
+    logo?: string;
+    description?: string;
+  };
+  skills?: { id: number; name: string; description?: string }[];
+  domains?: { id: number; name: string; description?: string }[];
+  benefits?: JobBenefit[];
+  locations?: JobLocation[];
+  isHighlight?: boolean;
+  about?: string;
+  responsibilities?: string;
+  requirement?: string;
+  quantity?: number;
+  totalApplications?: number;
+  canApply?: boolean;
+}
+
+/**
+ * Fetch a single job detail by ID.
+ * Endpoint: GET /v1/jobs/{id}
+ */
+export async function fetchJobDetail(jobId: number): Promise<JobDetailData | null> {
+  try {
+    const res = await fetch(`${BASE_URL}${API_VERSION}/jobs/${jobId}`, {
+      headers: { "Content-Type": "application/json" },
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      console.error(`Job detail API responded with ${res.status}`);
+      return null;
+    }
+    const json = await res.json();
+    return json?.data || json || null;
+  } catch (err) {
+    console.error("fetchJobDetail error:", err);
+    return null;
+  }
+}
+
 export interface JobsPageData {
   content: JobApiItem[];
   totalPages: number;
