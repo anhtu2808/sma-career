@@ -43,7 +43,7 @@ export default function AwardsSection({ theme, sectionProps = {}, settings = {} 
       }}>
         {items.filter(item => item.isVisible !== false).map((item, i) => (
           <div key={i} style={{
-            background: backgroundColor,
+            background: '#fff',
             borderRadius: `${borderRadius}px`,
             padding: '28px 24px',
             boxShadow: shadowMap[shadow],

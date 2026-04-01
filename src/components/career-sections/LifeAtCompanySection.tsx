@@ -8,6 +8,12 @@ interface NewsItem {
   isVisible?: boolean;
 }
 
+interface NavLinkItem {
+  url?: string;
+  text?: string;
+  isVisible?: boolean;
+}
+
 interface LifeAtCompanySectionProps {
   theme: FlatTheme;
   sectionProps: Record<string, unknown>;
@@ -15,8 +21,11 @@ interface LifeAtCompanySectionProps {
 }
 
 export default function LifeAtCompanySection({ theme, sectionProps = {}, settings = {} }: LifeAtCompanySectionProps) {
-  const { primaryColor, backgroundColor, textColor, borderRadius, shadow } = theme;
-  const { headline = 'Đời sống tại công ty' } = sectionProps as { headline?: string };
+  const { primaryColor, secondaryColor, textColor, borderRadius, shadow } = theme;
+  const { headline = 'Đời sống tại công ty', navLink = {} } = sectionProps as {
+    headline?: string;
+    navLink?: NavLinkItem;
+  };
 
   const news: NewsItem[] = (sectionProps.news as NewsItem[]) || [
     { title: 'Team Building 2025 tại Phú Quốc', thumbnailUrl: '', date: '15/03/2026' },
@@ -36,39 +45,62 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
       padding: `${settings.paddingTop || 64}px 40px ${settings.paddingBottom || 64}px`,
       textAlign: 'center',
     }}>
-      <h2 style={{ fontSize: '32px', fontWeight: 700, color: textColor, marginBottom: '40px' }}>
-        {headline}
-      </h2>
+      <div style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+        maxWidth: '750px', margin: '0 auto 40px',
+      }}>
+        <h2 style={{ fontSize: '32px', fontWeight: 700, color: textColor, margin: 0 }}>
+          {headline}
+        </h2>
+        {navLink.isVisible !== false && navLink.text && (
+          <a
+            href={navLink.url || '#'}
+            target={navLink.url?.startsWith('http') ? '_blank' : '_self'}
+            rel="noopener noreferrer"
+            style={{
+              fontSize: '14px',
+              fontWeight: 600,
+              color: primaryColor,
+              textDecoration: 'none',
+              borderBottom: `1.5px solid ${primaryColor}`,
+              paddingBottom: '2px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              whiteSpace: 'nowrap',
+              transition: 'opacity 0.2s',
+            }}
+          >
+            {navLink.text} <span style={{ fontSize: '16px' }}>→</span>
+          </a>
+        )}
+      </div>
 
       <div style={{
         display: 'grid', gridTemplateColumns: `repeat(${Math.min(visibleNews.length, 3)}, 1fr)`,
-        gap: '20px', maxWidth: '800px', margin: '0 auto',
+        gap: '20px', maxWidth: '750px', margin: '0 auto',
       }}>
         {visibleNews.map((item, i) => {
-          const Tag = item.url ? "a" : "div";
-          const linkProps = item.url ? { href: item.url, target: "_blank", rel: "noopener noreferrer" } : {};
-          return (
-            <Tag key={i} {...linkProps} style={{
-              background: backgroundColor,
+          const cardContent = (
+            <div style={{
+              background: '#fff',
               borderRadius: `${borderRadius}px`,
               overflow: 'hidden',
               boxShadow: shadowMap[shadow],
               border: '1px solid rgba(0,0,0,0.06)',
               textAlign: 'left',
+              height: '100%',
               transition: 'transform 0.2s',
-              textDecoration: 'none',
-              color: 'inherit',
-              display: 'block'
+              cursor: item.url ? 'pointer' : 'default',
             }}>
               <div style={{
-                height: '160px',
+                height: '140px',
                 background: item.thumbnailUrl
                   ? `url(${item.thumbnailUrl}) center/cover no-repeat`
-                  : `linear-gradient(135deg, ${primaryColor}20, ${primaryColor}08)`,
+                  : secondaryColor || `linear-gradient(135deg, ${primaryColor}20, ${primaryColor}08)`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: '36px',
               }}>
-                {!item.thumbnailUrl && '📸'}
               </div>
               <div style={{ padding: '16px 18px' }}>
                 <div style={{ fontSize: '14px', fontWeight: 700, color: textColor, marginBottom: '6px' }}>
@@ -78,7 +110,17 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
                   {item.date}
                 </div>
               </div>
-            </Tag>
+            </div>
+          );
+
+          return item.url ? (
+            <a key={i} href={item.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
+              {cardContent}
+            </a>
+          ) : (
+            <div key={i} style={{ height: '100%' }}>
+              {cardContent}
+            </div>
           );
         })}
       </div>
