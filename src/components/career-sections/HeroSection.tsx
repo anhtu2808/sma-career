@@ -22,7 +22,7 @@ export default function HeroSection({ theme, sectionProps = {}, settings = {} }:
     backgroundUrl?: string;
   };
 
-  const pad = `${settings.paddingTop || 80}px 40px ${settings.paddingBottom || 80}px`;
+  const pad = `${settings.paddingTop || 120}px 40px ${settings.paddingBottom || 120}px`;
 
   const btnBase: React.CSSProperties = {
     padding: '14px 32px',
@@ -58,15 +58,16 @@ export default function HeroSection({ theme, sectionProps = {}, settings = {} }:
 
       <div style={{ position: 'relative', zIndex: 1, maxWidth: '800px', margin: '0 auto' }}>
         <h1 style={{
-          fontSize: 'clamp(28px, 5vw, 48px)', fontWeight: 800, color: '#fff',
-          lineHeight: 1.2, marginBottom: '16px', letterSpacing: '-0.5px',
+          fontSize: 'clamp(32px, 5vw, 50px)', fontWeight: 800, color: '#fff',
+          lineHeight: 1.2, marginBottom: '20px', letterSpacing: '-0.5px', whiteSpace: 'nowrap',
         }}>
           {headline}
         </h1>
 
         <p style={{
-          fontSize: '16px', color: 'rgba(255,255,255,0.85)',
-          maxWidth: '560px', margin: '0 auto 32px', lineHeight: 1.6,
+          fontSize: '18px', color: 'rgba(255,255,255,0.85)',
+          maxWidth: '560px', margin: '0 auto 40px', lineHeight: 1.7,
+          opacity: 0.8,
         }}>
           {subline}
         </p>

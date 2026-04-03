@@ -14,7 +14,7 @@ interface AwardsSectionProps {
 }
 
 export default function AwardsSection({ theme, sectionProps = {}, settings = {} }: AwardsSectionProps) {
-  const { primaryColor, backgroundColor, textColor, borderRadius, shadow } = theme;
+  const { primaryColor, secondaryColor, backgroundColor, textColor, borderRadius, shadow } = theme;
   const { headline = 'Giải thưởng danh giá' } = sectionProps as { headline?: string };
 
   const items: AwardItem[] = (sectionProps.items as AwardItem[]) || [
@@ -38,34 +38,33 @@ export default function AwardsSection({ theme, sectionProps = {}, settings = {} 
       </h2>
 
       <div style={{
-        display: 'flex', gap: '24px', justifyContent: 'center', flexWrap: 'wrap',
-        maxWidth: '800px', margin: '0 auto',
+        display: 'flex', gap: '28px', justifyContent: 'center', flexWrap: 'wrap',
+        maxWidth: '1100px', margin: '0 auto',
       }}>
         {items.filter(item => item.isVisible !== false).map((item, i) => (
           <div key={i} style={{
             background: '#fff',
             borderRadius: `${borderRadius}px`,
-            padding: '28px 24px',
+            padding: '36px 32px',
             boxShadow: shadowMap[shadow],
             border: '1px solid rgba(0,0,0,0.06)',
-            width: '200px',
-            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px',
-            transition: 'transform 0.2s',
+            width: '280px',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px',
           }}>
             <div style={{
-              width: 64, height: 64, borderRadius: `${borderRadius}px`,
-              background: item.imgUrl ? `url(${item.imgUrl}) center/contain no-repeat` : `${primaryColor}10`,
+              width: 88, height: 88, borderRadius: `${borderRadius}px`,
+              background: item.imgUrl ? `url(${item.imgUrl}) center/contain no-repeat` : secondaryColor || `${primaryColor}10`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '28px',
             }}>
               {!item.imgUrl && '🏆'}
             </div>
-            <div style={{ fontSize: '15px', fontWeight: 700, color: textColor, textAlign: 'center' }}>
+            <div style={{ fontSize: '17px', fontWeight: 700, color: textColor, textAlign: 'center' }}>
               {item.name}
             </div>
             <div style={{
-              fontSize: '12px', fontWeight: 600, color: primaryColor,
-              background: `${primaryColor}10`, padding: '3px 10px', borderRadius: '20px',
+              fontSize: '13px', fontWeight: 600, color: primaryColor,
+              background: secondaryColor || `${primaryColor}10`, padding: '3px 10px', borderRadius: '20px',
             }}>
               {item.year}
             </div>

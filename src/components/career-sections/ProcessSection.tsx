@@ -13,7 +13,7 @@ interface ProcessSectionProps {
 }
 
 export default function ProcessSection({ theme, sectionProps = {}, settings = {} }: ProcessSectionProps) {
-  const { primaryColor, textColor } = theme;
+  const { primaryColor, secondaryColor, textColor } = theme;
   const { headline = 'Quy trình ứng tuyển' } = sectionProps as { headline?: string };
 
   const steps: StepItem[] = (sectionProps.steps as StepItem[]) || [
@@ -36,28 +36,28 @@ export default function ProcessSection({ theme, sectionProps = {}, settings = {}
 
       <div style={{
         display: 'grid', gridTemplateColumns: `repeat(${Math.min(visibleSteps.length, 4)}, 1fr)`,
-        gap: '24px', maxWidth: '800px', margin: '0 auto', position: 'relative',
+        gap: '32px', maxWidth: '1100px', margin: '0 auto', position: 'relative',
       }}>
         {visibleSteps.map((step, i) => (
           <div key={i} style={{ textAlign: 'center', position: 'relative' }}>
             <div style={{
-              width: 48, height: 48, borderRadius: '50%',
+              width: 60, height: 60, borderRadius: '50%',
               background: primaryColor, color: '#fff',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontWeight: 800, fontSize: '16px', margin: '0 auto 16px',
+              fontWeight: 800, fontSize: '18px', margin: '0 auto 20px',
             }}>
               {String(i + 1).padStart(2, '0')}
             </div>
             {i < visibleSteps.length - 1 && (
               <div style={{
-                position: 'absolute', top: 24, left: '60%', width: '80%',
-                height: '2px', background: `${primaryColor}30`,
+                position: 'absolute', top: 30, left: '60%', width: '80%',
+                height: '2px', background: secondaryColor || `${primaryColor}30`,
               }} />
             )}
-            <div style={{ fontSize: '15px', fontWeight: 700, color: textColor, marginBottom: '6px' }}>
+            <div style={{ fontSize: '17px', fontWeight: 700, color: textColor, marginBottom: '8px' }}>
               {step.title}
             </div>
-            <div style={{ fontSize: '12px', color: textColor, opacity: 0.55, lineHeight: 1.5 }}>
+            <div style={{ fontSize: '14px', color: textColor, opacity: 0.55, lineHeight: 1.6 }}>
               {step.desc}
             </div>
           </div>
