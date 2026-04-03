@@ -25,11 +25,22 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Extract subdomain: e.g., "hutechh.smartrecruit.tech" → "hutechh"
-  const subdomain = hostname.replace(`.${ROOT_DOMAIN}`, "").split(".")[0];
+  // Remove port if present (e.g., smartrecruit.tech:3000)
+  const hostWithoutPort = hostname.split(':')[0];
 
-  // Skip if no subdomain (root domain access) or if it's "www"
-  if (!subdomain || subdomain === ROOT_DOMAIN.split(".")[0] || subdomain === "www") {
+  // If accessing the root domain or www directly, skip routing
+  if (hostWithoutPort === ROOT_DOMAIN || hostWithoutPort === `www.${ROOT_DOMAIN}`) {
+    return NextResponse.next();
+  }
+
+  // Extract subdomain: e.g., "hutechh.smartrecruit.tech" → "hutechh"
+  let subdomain = "";
+  if (hostWithoutPort.endsWith(`.${ROOT_DOMAIN}`)) {
+    subdomain = hostWithoutPort.replace(`.${ROOT_DOMAIN}`, "").toLowerCase();
+  }
+
+  // Skip if no subdomain found
+  if (!subdomain) {
     return NextResponse.next();
   }
 
