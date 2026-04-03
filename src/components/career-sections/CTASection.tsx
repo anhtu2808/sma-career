@@ -7,7 +7,7 @@ interface CTASectionProps {
 }
 
 export default function CTASection({ theme, sectionProps = {}, settings = {} }: CTASectionProps) {
-  const { primaryColor, borderRadius, buttonStyle } = theme;
+  const { primaryColor, secondaryColor, borderRadius, buttonStyle } = theme;
   const {
     headline = 'Sẵn sàng bứt phá sự nghiệp?',
     ctaText = 'Ứng tuyển ngay',
@@ -32,14 +32,14 @@ export default function CTASection({ theme, sectionProps = {}, settings = {} }: 
       }} />
 
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <h2 style={{ fontSize: '32px', fontWeight: 800, color: '#fff', marginBottom: '20px' }}>
+        <h2 style={{ fontSize: '32px', fontWeight: 800, color: '#fff', marginBottom: '12px' }}>
           {headline}
         </h2>
         {ctaText && (
           <a href={ctaLink} style={{
             padding: '14px 36px',
             borderRadius: `${borderRadius}px`,
-            background: '#fff',
+            background: secondaryColor || '#fff',
             color: primaryColor,
             border: 'none',
             fontSize: '16px',

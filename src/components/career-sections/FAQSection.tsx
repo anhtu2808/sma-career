@@ -16,7 +16,7 @@ interface FAQSectionProps {
 }
 
 export default function FAQSection({ theme, sectionProps = {}, settings = {} }: FAQSectionProps) {
-  const { primaryColor, backgroundColor, textColor, borderRadius } = theme;
+  const { primaryColor, secondaryColor, backgroundColor, textColor, borderRadius } = theme;
   const { headline = 'Câu hỏi thường gặp' } = sectionProps as { headline?: string };
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -36,7 +36,7 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
         {headline}
       </h2>
 
-      <div style={{ maxWidth: '680px', margin: '0 auto', textAlign: 'left' }}>
+      <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'left' }}>
         {items.filter(item => item.isVisible !== false).map((item, i) => {
           const isOpen = openIndex === i;
           return (
@@ -48,13 +48,14 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
                 marginBottom: '10px',
                 overflow: 'hidden',
                 transition: 'all 0.2s',
+                background: '#fff',
               }}
             >
               <button
                 onClick={() => setOpenIndex(isOpen ? null : i)}
                 style={{
                   width: '100%', padding: '16px 20px',
-                  background: isOpen ? `${primaryColor}08` : 'transparent',
+                  background: isOpen ? (secondaryColor || `${primaryColor}08`) : 'transparent',
                   border: 'none', cursor: 'pointer',
                   display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                   textAlign: 'left',

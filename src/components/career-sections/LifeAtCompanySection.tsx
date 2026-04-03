@@ -47,7 +47,7 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
     }}>
       <div style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-        maxWidth: '750px', margin: '0 auto 40px',
+        maxWidth: '1100px', margin: '0 auto 40px',
       }}>
         <h2 style={{ fontSize: '32px', fontWeight: 700, color: textColor, margin: 0 }}>
           {headline}
@@ -78,7 +78,7 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
 
       <div style={{
         display: 'grid', gridTemplateColumns: `repeat(${Math.min(visibleNews.length, 3)}, 1fr)`,
-        gap: '20px', maxWidth: '750px', margin: '0 auto',
+        gap: '28px', maxWidth: '1100px', margin: '0 auto',
       }}>
         {visibleNews.map((item, i) => {
           const cardContent = (
@@ -94,7 +94,7 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
               cursor: item.url ? 'pointer' : 'default',
             }}>
               <div style={{
-                height: '140px',
+                height: '200px',
                 background: item.thumbnailUrl
                   ? `url(${item.thumbnailUrl}) center/cover no-repeat`
                   : secondaryColor || `linear-gradient(135deg, ${primaryColor}20, ${primaryColor}08)`,
@@ -102,11 +102,11 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
                 fontSize: '36px',
               }}>
               </div>
-              <div style={{ padding: '16px 18px' }}>
-                <div style={{ fontSize: '14px', fontWeight: 700, color: textColor, marginBottom: '6px' }}>
+              <div style={{ padding: '20px 24px' }}>
+                <div style={{ fontSize: '16px', fontWeight: 700, color: textColor, marginBottom: '8px' }}>
                   {item.title}
                 </div>
-                <div style={{ fontSize: '12px', color: textColor, opacity: 0.45 }}>
+                <div style={{ fontSize: '13px', color: textColor, opacity: 0.45 }}>
                   {item.date}
                 </div>
               </div>

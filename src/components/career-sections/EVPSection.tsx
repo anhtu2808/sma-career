@@ -18,7 +18,7 @@ interface EVPSectionProps {
 }
 
 export default function EVPSection({ theme, sectionProps = {}, settings = {} }: EVPSectionProps) {
-  const { primaryColor, backgroundColor, textColor, borderRadius, shadow } = theme;
+  const { primaryColor, secondaryColor, backgroundColor, textColor, borderRadius, shadow } = theme;
   const { headline = 'Tại sao bạn nên gia nhập?' } = sectionProps as { headline?: string };
 
   const items: EVPItem[] = (sectionProps.items as EVPItem[]) || [
@@ -45,35 +45,36 @@ export default function EVPSection({ theme, sectionProps = {}, settings = {} }: 
       </h2>
 
       <div style={{
-        display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px',
-        maxWidth: '800px', margin: '0 auto',
+        display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px',
+        maxWidth: '1100px', margin: '0 auto',
       }}>
         {items.filter(b => b.isVisible !== false).map((b, i) => (
           <div key={i} style={{
             background: '#fff',
             borderRadius: `${borderRadius}px`,
-            padding: '28px 24px',
+            padding: '36px 32px',
             textAlign: 'left',
             boxShadow: shadowMap[shadow],
             border: '1px solid rgba(0,0,0,0.06)',
-            transition: 'transform 0.2s, box-shadow 0.2s',
+            position: 'relative',
           }}>
-            <div style={{
-              fontSize: '28px',
-              color: primaryColor,
-              width: '48px', height: '48px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: `${primaryColor}15`,
-              borderRadius: '12px',
-              marginBottom: '16px',
-            }}>
-              <FontAwesomeIcon icon={resolveIcon(b.icon)} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+              <div style={{
+                fontSize: '28px',
+                color: primaryColor,
+                width: '52px', height: '52px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                background: secondaryColor || `${primaryColor}15`,
+                borderRadius: '8px',
+              }}>
+                <FontAwesomeIcon icon={resolveIcon(b.icon)} />
+              </div>
             </div>
 
-            <div style={{ fontSize: '16px', fontWeight: 700, color: textColor, marginBottom: '6px' }}>
+            <div style={{ fontSize: '18px', fontWeight: 700, color: textColor, marginBottom: '8px' }}>
               {b.title}
             </div>
-            <div style={{ fontSize: '13px', color: textColor, opacity: 0.6, lineHeight: 1.6 }}>
+            <div style={{ fontSize: '14px', color: textColor, opacity: 0.6, lineHeight: 1.7 }}>
               {b.desc}
             </div>
           </div>
