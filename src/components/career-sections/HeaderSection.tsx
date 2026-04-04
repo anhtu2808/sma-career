@@ -4,9 +4,10 @@ interface HeaderSectionProps {
   theme: FlatTheme;
   headerConfig: HeaderConfig;
   companyName?: string;
+  slug?: string;
 }
 
-export default function HeaderSection({ theme, headerConfig, companyName = 'Company' }: HeaderSectionProps) {
+export default function HeaderSection({ theme, headerConfig, companyName = 'Company', slug }: HeaderSectionProps) {
   const { primaryColor, backgroundColor, textColor, borderRadius, buttonStyle } = theme;
   const {
     logoUrl,
@@ -21,6 +22,15 @@ export default function HeaderSection({ theme, headerConfig, companyName = 'Comp
     { label: 'Phúc lợi' },
     { label: 'Blog' },
   ];
+
+  /** Build the correct href for a nav link.
+   *  - On the career page itself (no slug prop), use simple anchors: #sectionId
+   *  - On sub-pages like Job Detail (slug provided), use full path: /slug#sectionId
+   */
+  const buildNavHref = (targetSectionId?: string) => {
+    if (!targetSectionId) return slug ? `/${slug}` : '#';
+    return slug ? `/${slug}#${targetSectionId}` : `#${targetSectionId}`;
+  };
 
   const btnBase: React.CSSProperties = {
     padding: '8px 20px',
@@ -49,7 +59,7 @@ export default function HeaderSection({ theme, headerConfig, companyName = 'Comp
       borderBottom: '1px solid rgba(0,0,0,0.08)',
       ...(headerConfig.sticky ? { position: 'sticky', top: 0, zIndex: 100 } : {}),
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+      <a href={slug ? `/${slug}` : '/'} style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
         {logoUrl ? (
           <img src={logoUrl} alt="Logo" style={{ height: `${logoHeight}px`, objectFit: 'contain' }} />
         ) : (
@@ -63,7 +73,7 @@ export default function HeaderSection({ theme, headerConfig, companyName = 'Comp
           </div>
         )}
         <span style={{ fontWeight: 700, fontSize: '16px', color: textColor }}>{companyName}</span>
-      </div>
+      </a>
 
       <nav style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
         {defaultNavLinks
@@ -71,7 +81,7 @@ export default function HeaderSection({ theme, headerConfig, companyName = 'Comp
           .map((link, i) => (
             <a
               key={i}
-              href={link.targetSectionId ? `#${link.targetSectionId}` : '#'}
+              href={buildNavHref(link.targetSectionId)}
               style={{
                 fontSize: '14px', color: textColor, opacity: 0.7,
                 cursor: 'pointer', textDecoration: 'none',
@@ -83,7 +93,7 @@ export default function HeaderSection({ theme, headerConfig, companyName = 'Comp
           ))}
         {ctaButton?.isVisible !== false && (
           <a
-            href={ctaButton?.link || '#'}
+            href={ctaButton?.link || buildNavHref()}
             style={btnStyles[buttonStyle] || btnStyles.filled}
           >
             {ctaButton?.text || 'Apply Now'}

@@ -93,6 +93,7 @@ export default async function JobDetailPage({ params }: JobPageProps) {
           theme={theme}
           headerConfig={pageData.headerConfig}
           companyName={companyName}
+          slug={slug}
         />
       )}
 
