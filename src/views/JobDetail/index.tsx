@@ -82,8 +82,6 @@ export default function JobDetailView({ slug, jobDetail, theme }: JobDetailViewP
                  border: "none", cursor: "pointer", transition: "all 0.2s",
                  boxShadow: `0 4px 12px ${primaryColor}30`,
                }}
-               onMouseOver={(e) => e.currentTarget.style.transform = "translateY(-1px)"}
-               onMouseOut={(e) => e.currentTarget.style.transform = "none"}
              >
                Apply Now ↗
              </button>

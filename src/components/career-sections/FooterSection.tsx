@@ -90,11 +90,9 @@ export default function FooterSection({ theme, footerConfig }: FooterSectionProp
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = 'rgba(255,255,255,0.18)';
-                    e.currentTarget.style.transform = 'scale(1.1)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
-                    e.currentTarget.style.transform = 'scale(1)';
                   }}
                 >
                   <FontAwesomeIcon icon={resolveIcon(iconKey)} />
