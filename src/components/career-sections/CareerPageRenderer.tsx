@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import type { FlatTheme, LayoutSection, HeaderConfig, FooterConfig } from "@/types/career-page";
 import HeaderSection from "./HeaderSection";
 import HeroSection from "./HeroSection";
@@ -68,6 +69,21 @@ export default function CareerPageRenderer({
     }
   };
   const spacingPad = getSpacingValue(theme.spacing);
+
+  // Scroll to hash target after the page mounts (e.g. navigating from Job Detail with /{slug}#sectionId)
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      // Small delay to ensure all sections have rendered
+      const timer = setTimeout(() => {
+        const el = document.querySelector(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   return (
     <div

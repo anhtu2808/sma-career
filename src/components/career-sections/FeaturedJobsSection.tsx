@@ -1,9 +1,11 @@
 "use client";
+import { useState, useCallback, useMemo, useEffect } from "react";
 
-import { useState, useMemo, useEffect, useCallback } from "react";
-import { Select, Slider, ConfigProvider, Modal, Form, Input, Upload, Button, message } from "antd";
+import { useParams, useRouter } from "next/navigation";
+import { Select, Slider, ConfigProvider } from "antd";
 import type { FlatTheme, LayoutSectionSettings } from "@/types/career-page";
-import { fetchJobs, fetchSkills, fetchExpertises, fetchDomains, uploadFile, uploadPublicResume, publicApplyJob, fetchJobQuestions, fetchJobDetail, type JobApiItem, type JobQuestion, type JobDetailData } from "@/lib/api";
+import { fetchJobs, fetchSkills, fetchExpertises, fetchDomains, type JobApiItem } from "@/lib/api";
+import ApplyJobModal from "./ApplyJobModal";
 
 interface FeaturedJobsSectionProps {
   theme: FlatTheme;
@@ -61,19 +63,12 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
   const [fetchedJobs, setFetchedJobs] = useState<JobApiItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const router = useRouter();
+  const params = useParams();
+
   // ─── Modal State ─────────────────────────────────────────
   const [applyModalOpen, setApplyModalOpen] = useState(false);
   const [applyingJob, setApplyingJob] = useState<JobApiItem | null>(null);
-  const [form] = Form.useForm();
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [jobQuestions, setJobQuestions] = useState<JobQuestion[]>([]);
-  const [isFetchingQuestions, setIsFetchingQuestions] = useState(false);
-
-  // ─── Detail Modal State ─────────────────────────────────
-  const [detailModalOpen, setDetailModalOpen] = useState(false);
-  const [jobDetail, setJobDetail] = useState<JobDetailData | null>(null);
-  const [isFetchingDetail, setIsFetchingDetail] = useState(false);
 
   // ─── Fetch jobs from API ─────────────────────────────────
   const loadJobs = useCallback(async () => {
@@ -178,96 +173,19 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
     setCurrentPage(1);
   };
 
-  const handleApplyClick = async (job: JobApiItem) => {
+  const handleApplyClick = (job: JobApiItem) => {
     setApplyingJob(job);
     setApplyModalOpen(true);
-    form.resetFields();
-    setSelectedFile(null);
-    setJobQuestions([]);
-    setIsFetchingQuestions(true);
-    const questions = await fetchJobQuestions(job.id);
-    setJobQuestions(questions);
-    setIsFetchingQuestions(false);
   };
 
-  const handleViewDetail = async (job: JobApiItem) => {
-    setDetailModalOpen(true);
-    setJobDetail(null);
-    setIsFetchingDetail(true);
-    const detail = await fetchJobDetail(job.id);
-    setJobDetail(detail);
-    setIsFetchingDetail(false);
+  const handleViewDetail = (job: JobApiItem) => {
+    const slug = params.slug;
+    router.push(`/${slug}/jobs/${job.id}`);
   };
 
   const handleModalClose = () => {
-    if (isSubmitting) return;
     setApplyModalOpen(false);
     setApplyingJob(null);
-  };
-
-  const handleApplySubmit = async (values: any) => {
-    if (!applyingJob) return;
-    if (!selectedFile) {
-      message.error("Please upload your CV.");
-      return;
-    }
-    setIsSubmitting(true);
-    try {
-      // 1. Upload File
-      const fileData = await uploadFile(selectedFile);
-      if (!fileData || !fileData.downloadUrl) {
-        throw new Error("Failed to upload CV. Could not retrieve URL.");
-      }
-
-      // 2. Register Resume
-      const resumeId = await uploadPublicResume({
-        resumeName: selectedFile.name,
-        fileName: fileData.originalFileName || selectedFile.name,
-        resumeUrl: fileData.downloadUrl,
-      });
-
-      // 3. Apply
-      const answersList = jobQuestions.map((q) => ({
-        questionId: q.id,
-        answerContent: values[`question_${q.id}`] || "",
-      }));
-
-      await publicApplyJob({
-        jobId: applyingJob.id,
-        resumeId,
-        fullName: values.fullName,
-        phone: values.phone,
-        email: values.email,
-        coverLetter: values.coverLetter || "",
-        appliedAt: new Date().toISOString(),
-        answers: answersList,
-      });
-
-      message.success("Application submitted successfully! Thank you for your interest.");
-      setApplyModalOpen(false);
-      form.resetFields();
-      setSelectedFile(null);
-    } catch (err: any) {
-      message.error(err.message || "An error occurred while applying. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const uploadProps = {
-    beforeUpload: (file: File) => {
-      const isAllowed = file.type === "application/pdf" || file.name.endsWith(".doc") || file.name.endsWith(".docx");
-      if (!isAllowed) {
-        message.error("Only PDF or DOC/DOCX files are supported!");
-        return Upload.LIST_IGNORE;
-      }
-      setSelectedFile(file);
-      return false; // Prevent default upload behavior
-    },
-    onRemove: () => {
-      setSelectedFile(null);
-    },
-    maxCount: 1,
   };
 
   // ─── Styles ──────────────────────────────────────────────
@@ -495,19 +413,6 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                   border: "1px solid rgba(0,0,0,0.06)", textAlign: "left",
                   transition: "box-shadow 0.2s, transform 0.2s",
                 }}>
-                  {/* Company logo */}
-                  <div style={{
-                    width: 48, height: 48, borderRadius: `${borderRadius}px`,
-                    background: job.company?.logo
-                      ? `url(${job.company.logo}) center/contain no-repeat`
-                      : `${primaryColor}10`,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    flexShrink: 0, fontSize: "18px", color: primaryColor,
-                    border: "1px solid rgba(0,0,0,0.06)",
-                  }}>
-                    {!job.company?.logo && ""}
-                  </div>
-
                   {/* Job details */}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px", flexWrap: "wrap" }}>
@@ -568,7 +473,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                         cursor: "pointer", transition: "all 0.2s",
                         background: "transparent", color: primaryColor,
                         border: `1.5px solid ${primaryColor}`, display: "block",
-                        width: "100%", textAlign: "center",
+                        width: "140px", marginLeft: "auto", textAlign: "center",
                       }}
                     >View Detail</button>
                     <button
@@ -576,7 +481,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                       style={{
                         ...(btnStyles[buttonStyle] || btnStyles.flat),
                         marginTop: "6px", padding: "6px 16px", fontSize: "12px",
-                        display: "block", width: "100%", textAlign: "center",
+                        display: "block", width: "140px", marginLeft: "auto", textAlign: "center",
                       }}
                     >Apply Now</button>
                   </div>
@@ -633,387 +538,12 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
         </div>
       </div>
 
-      <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.5; }
-        }
-      `}</style>
-
-      {/* ─── Application Modal ────────────────────────────────────── */}
-      <Modal
-        title={`Apply for: ${applyingJob?.name || ""}`}
-        open={applyModalOpen}
-        onCancel={handleModalClose}
-        footer={null}
-        destroyOnHidden
-      >
-        <Form form={form} layout="vertical" onFinish={handleApplySubmit} style={{ marginTop: 16 }}>
-          <Form.Item name="fullName" label="Full Name" rules={[{ required: true, message: "Please enter your full name" }]}>
-            <Input placeholder="John Doe" />
-          </Form.Item>
-          <Form.Item name="email" label="Email" rules={[
-            { required: true, message: "Please enter your email" },
-            { type: "email", message: "Invalid email address" }
-          ]}>
-            <Input placeholder="email@example.com" />
-          </Form.Item>
-          <Form.Item name="phone" label="Phone Number" rules={[{ required: true, message: "Please enter your phone number" }]}>
-            <Input placeholder="09xxxx..." />
-          </Form.Item>
-          <Form.Item name="coverLetter" label="Cover Letter">
-            <Input.TextArea placeholder="Briefly introduce yourself or your career goals..." rows={4} />
-          </Form.Item>
-
-          {/* ─── Tải bộ câu hỏi từ API ───────────────────────────── */}
-          {isFetchingQuestions ? (
-             <div style={{ padding: "16px 0", textAlign: "center", color: "#6b7280", fontSize: 13 }}>Loading job questions...</div>
-          ) : (
-             jobQuestions.map((q) => (
-                <Form.Item 
-                  key={q.id} 
-                  name={`question_${q.id}`} 
-                  label={q.content} 
-                  rules={[{ required: q.isRequired, message: "Please answer this question" }]}
-                >
-                  <Input.TextArea placeholder="Answer question..." rows={3} />
-                </Form.Item>
-             ))
-          )}
-
-          {/* ─── UI Mới cho Phần Upload CV ──────────────────────── */}
-          <style>{`.custom-upload .ant-upload-select { width: 100% !important; display: block !important; }`}</style>
-          <Form.Item label="Resume (CV)" required style={{ marginTop: 20 }}>
-            <Upload {...uploadProps} showUploadList={false} className="custom-upload" style={{ width: "100%", display: "block" }}>
-              {!selectedFile ? (
-                <div style={{
-                  width: "100%", padding: "18px 24px", border: "1px dashed #cbd5e1",
-                  borderRadius: "10px", background: "#f8fafc", cursor: "pointer",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  gap: 10, color: "#334155", transition: "all 0.2s"
-                }}
-                onMouseOver={(e) => (e.currentTarget.style.borderColor = primaryColor)}
-                onMouseOut={(e) => (e.currentTarget.style.borderColor = "#cbd5e1")}
-                >
-                  <span style={{ fontSize: 18, color: "#64748b" }}>↑</span>
-                  <span style={{ fontWeight: 600, fontSize: 14 }}>Upload CV (PDF, DOC)</span>
-                </div>
-              ) : (
-                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                  {/* Upload New CV Button */}
-                  <div style={{
-                    width: "100%", padding: "14px 20px", border: "1px dashed #cbd5e1",
-                    borderRadius: "10px", background: "#f8fafc", cursor: "pointer",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    gap: 8, color: "#334155", transition: "all 0.2s"
-                  }}
-                  onMouseOver={(e) => (e.currentTarget.style.borderColor = primaryColor)}
-                  onMouseOut={(e) => (e.currentTarget.style.borderColor = "#cbd5e1")}
-                  >
-                    <span style={{ fontSize: 16, color: "#64748b" }}>↑</span>
-                    <span style={{ fontWeight: 600, fontSize: 13 }}>Upload another CV (PDF, DOC)</span>
-                  </div>
-
-                  {/* Selected CV Card */}
-                  <div style={{
-                    width: "100%", padding: "14px 20px", border: "1px solid #f97316",
-                    background: "#fff7ed", borderRadius: "10px", display: "flex",
-                    alignItems: "center", justifyContent: "space-between", cursor: "default",
-                    transition: "all 0.2s"
-                  }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                      <div style={{ textAlign: "left" }}>
-                        <div style={{ fontWeight: 700, fontSize: 14, color: "#1f2937", marginBottom: 2, wordBreak: "break-all" }}>
-                          {selectedFile.name}
-                        </div>
-                        <div style={{ fontSize: 12, color: "#6b7280" }}>
-                          {new Date().toLocaleDateString("vi-VN")}
-                        </div>
-                      </div>
-                    </div>
-                    <div style={{ 
-                      width: 24, height: 24, borderRadius: "50%", border: "2px solid #f97316",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      color: "#f97316", fontSize: 12, fontWeight: 700, flexShrink: 0
-                     }}>
-                      ✓
-                    </div>
-                  </div>
-                </div>
-              )}
-            </Upload>
-          </Form.Item>
-
-          <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 24 }}>
-            <Button onClick={handleModalClose} disabled={isSubmitting}>Cancel</Button>
-            <Button type="primary" htmlType="submit" loading={isSubmitting} style={{ background: primaryColor }}>
-              Submit Application
-            </Button>
-          </div>
-        </Form>
-      </Modal>
-
-      {/* ─── Job Detail Modal ───────────────────────────────────────── */}
-      <Modal
-        title={null}
-        open={detailModalOpen}
-        onCancel={() => setDetailModalOpen(false)}
-        footer={null}
-        destroyOnHidden
-        width={720}
-        styles={{ body: { padding: 0, maxHeight: "80vh", overflowY: "auto" } }}
-      >
-        {isFetchingDetail ? (
-          <div style={{ padding: "60px 0", textAlign: "center" }}>
-            <div style={{
-              width: 40, height: 40, border: `3px solid ${primaryColor}20`, borderTopColor: primaryColor,
-              borderRadius: "50%", animation: "spin 0.8s linear infinite", margin: "0 auto 16px"
-            }} />
-            <div style={{ color: "#6b7280", fontSize: 14 }}>Loading job details...</div>
-            <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-          </div>
-        ) : jobDetail ? (
-          <div style={{ fontFamily: theme.fontFamily }}>
-            {/* Header */}
-            <div style={{
-              padding: "28px 32px 24px", borderBottom: "1px solid #f0f0f0",
-              display: "flex", alignItems: "flex-start", gap: 20,
-            }}>
-              {/* Logo */}
-              <div style={{
-                width: 56, height: 56, borderRadius: `${borderRadius}px`, flexShrink: 0,
-                background: jobDetail.company?.logo
-                  ? `url(${jobDetail.company.logo}) center/contain no-repeat`
-                  : `linear-gradient(135deg, ${primaryColor}15, ${primaryColor}30)`,
-                border: "1px solid #f0f0f0",
-              }} />
-              <div style={{ flex: 1 }}>
-                <h2 style={{ fontSize: 22, fontWeight: 800, color: textColor, margin: 0, lineHeight: 1.3 }}>
-                  {jobDetail.name}
-                </h2>
-                <div style={{ fontSize: 14, color: "#6b7280", marginTop: 4 }}>
-                  {jobDetail.company?.name}
-                  {jobDetail.uploadTime && (
-                    <span style={{ marginLeft: 8, fontSize: 12, opacity: 0.7 }}>
-                      · Posted {new Date(jobDetail.uploadTime).toLocaleDateString()}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Meta chips */}
-            <div style={{
-              padding: "16px 32px", display: "flex", flexWrap: "wrap", gap: 10,
-              borderBottom: "1px solid #f0f0f0", fontSize: 13, color: "#374151",
-            }}>
-              {jobDetail.locations && jobDetail.locations.length > 0 && (
-                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                  <span style={{ color: primaryColor }}>📍</span>
-                  {jobDetail.locations.map(l => l.city || l.name).filter(Boolean).join(", ")}
-                </span>
-              )}
-              {(jobDetail.salaryStart || jobDetail.salaryEnd) && (
-                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                  <span style={{ color: primaryColor }}>💰</span>
-                  <span style={{ fontWeight: 700, color: primaryColor }}>
-                    {formatSalary(jobDetail.salaryStart, jobDetail.salaryEnd)}
-                  </span>
-                </span>
-              )}
-              {jobDetail.experienceTime !== undefined && jobDetail.experienceTime !== null && (
-                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                  <span style={{ color: primaryColor }}>⏱</span>
-                  {jobDetail.experienceTime} years experience
-                </span>
-              )}
-              {jobDetail.jobLevel && (
-                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                  <span style={{ color: primaryColor }}>🎯</span>
-                  {JOB_LEVEL_MAP[jobDetail.jobLevel] || jobDetail.jobLevel}
-                </span>
-              )}
-              {jobDetail.workingModel && (
-                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                  <span style={{ color: primaryColor }}>🏢</span>
-                  {WORKING_MODEL_MAP[jobDetail.workingModel] || jobDetail.workingModel}
-                </span>
-              )}
-              {jobDetail.expDate && (
-                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                  <span style={{ color: primaryColor }}>📅</span>
-                  Deadline: {new Date(jobDetail.expDate).toLocaleDateString()}
-                </span>
-              )}
-            </div>
-
-            {/* Skills / Expertise / Domain tags */}
-            <div style={{ padding: "16px 32px", borderBottom: "1px solid #f0f0f0" }}>
-              {jobDetail.skills && jobDetail.skills.length > 0 && (
-                <div style={{ marginBottom: 10 }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: "#6b7280", marginRight: 8 }}>Skills:</span>
-                  {jobDetail.skills.map(s => (
-                    <span key={s.id} style={{
-                      display: "inline-block", padding: "3px 12px", borderRadius: 6, fontSize: 12,
-                      fontWeight: 500, background: `${primaryColor}08`, color: primaryColor,
-                      border: `1px solid ${primaryColor}20`, marginRight: 6, marginBottom: 4,
-                    }}>{s.name}</span>
-                  ))}
-                </div>
-              )}
-              {jobDetail.expertise?.name && (
-                <div style={{ marginBottom: 10 }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: "#6b7280", marginRight: 8 }}>Job Expertise:</span>
-                  <span style={{
-                    display: "inline-block", padding: "3px 12px", borderRadius: 6, fontSize: 12,
-                    fontWeight: 600, background: "#EFF6FF", color: "#2563EB",
-                    border: "1px solid #BFDBFE", textDecoration: "none",
-                  }}>{jobDetail.expertise.name}</span>
-                </div>
-              )}
-              {jobDetail.domains && jobDetail.domains.length > 0 && (
-                <div>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: "#6b7280", marginRight: 8 }}>Job Domain:</span>
-                  {jobDetail.domains.map(d => (
-                    <span key={d.id} style={{
-                      display: "inline-block", padding: "3px 12px", borderRadius: 6, fontSize: 12,
-                      fontWeight: 600, background: "#F0FDF4", color: "#16A34A",
-                      border: "1px solid #BBF7D0", marginRight: 6,
-                    }}>{d.name}</span>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Action Buttons */}
-            <div style={{ padding: "16px 32px", display: "flex", gap: 12, borderBottom: "1px solid #f0f0f0" }}>
-              <button
-                onClick={() => {
-                  setDetailModalOpen(false);
-                  const matchingJob = fetchedJobs.find(j => j.id === jobDetail.id);
-                  if (matchingJob) handleApplyClick(matchingJob);
-                }}
-                style={{
-                  flex: 1, padding: "12px 24px", borderRadius: `${borderRadius}px`,
-                  background: primaryColor, color: "#fff", fontSize: 15, fontWeight: 700,
-                  border: "none", cursor: "pointer", transition: "all 0.2s",
-                  display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                }}
-              >
-                Apply Now <span style={{ fontSize: 13 }}>↗</span>
-              </button>
-            </div>
-
-            {/* Content Sections */}
-            <div style={{ padding: "24px 32px" }}>
-              {/* About */}
-              {jobDetail.about && (
-                <div style={{ marginBottom: 28 }}>
-                  <h3 style={{
-                    fontSize: 16, fontWeight: 800, color: textColor, marginBottom: 10,
-                    paddingBottom: 8, borderBottom: `2px solid ${primaryColor}15`,
-                  }}>About the Role</h3>
-                  <div
-                    style={{ fontSize: 14, color: "#374151", lineHeight: 1.75 }}
-                    dangerouslySetInnerHTML={{ __html: jobDetail.about }}
-                  />
-                </div>
-              )}
-
-              {/* Responsibilities */}
-              {jobDetail.responsibilities && (
-                <div style={{ marginBottom: 28 }}>
-                  <h3 style={{
-                    fontSize: 16, fontWeight: 800, color: textColor, marginBottom: 10,
-                    paddingBottom: 8, borderBottom: `2px solid ${primaryColor}15`,
-                  }}>Responsibilities</h3>
-                  <div
-                    style={{ fontSize: 14, color: "#374151", lineHeight: 1.75 }}
-                    dangerouslySetInnerHTML={{ __html: jobDetail.responsibilities }}
-                  />
-                </div>
-              )}
-
-              {/* Requirements */}
-              {jobDetail.requirement && (
-                <div style={{ marginBottom: 28 }}>
-                  <h3 style={{
-                    fontSize: 16, fontWeight: 800, color: textColor, marginBottom: 10,
-                    paddingBottom: 8, borderBottom: `2px solid ${primaryColor}15`,
-                  }}>Requirements</h3>
-                  <div
-                    style={{ fontSize: 14, color: "#374151", lineHeight: 1.75 }}
-                    dangerouslySetInnerHTML={{ __html: jobDetail.requirement }}
-                  />
-                </div>
-              )}
-
-              {/* Benefits */}
-              {jobDetail.benefits && jobDetail.benefits.length > 0 && (
-                <div style={{ marginBottom: 28 }}>
-                  <h3 style={{
-                    fontSize: 16, fontWeight: 800, color: textColor, marginBottom: 14,
-                    paddingBottom: 8, borderBottom: `2px solid ${primaryColor}15`,
-                  }}>What We Can Offer</h3>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                    {jobDetail.benefits.map(b => (
-                      <div key={b.id} style={{
-                        padding: "14px 18px", borderRadius: `${borderRadius}px`,
-                        border: "1px solid #f0f0f0", background: "#FAFAFA",
-                        display: "flex", alignItems: "center", gap: 14,
-                      }}>
-                        <div style={{
-                          width: 36, height: 36, borderRadius: 8,
-                          background: `${primaryColor}12`, display: "flex",
-                          alignItems: "center", justifyContent: "center",
-                          fontSize: 16, color: primaryColor, flexShrink: 0,
-                        }}>
-                          {b.type === "FINANCIAL" ? "💵" : b.type === "HEALTH" ? "🏥" : b.type === "EDUCATION" ? "📚" : "✨"}
-                        </div>
-                        <div>
-                          <div style={{ fontSize: 14, fontWeight: 700, color: textColor }}>{b.name}</div>
-                          {b.description && (
-                            <div style={{ fontSize: 12, color: "#6b7280", marginTop: 2 }}>{b.description}</div>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Location details */}
-              {jobDetail.locations && jobDetail.locations.length > 0 && (
-                <div>
-                  <h3 style={{
-                    fontSize: 16, fontWeight: 800, color: textColor, marginBottom: 14,
-                    paddingBottom: 8, borderBottom: `2px solid ${primaryColor}15`,
-                  }}>Office Locations</h3>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                    {jobDetail.locations.map(loc => (
-                      <div key={loc.id} style={{
-                        padding: "14px 18px", borderRadius: `${borderRadius}px`,
-                        border: "1px solid #f0f0f0", background: "#FAFAFA",
-                      }}>
-                        <div style={{ fontSize: 14, fontWeight: 700, color: textColor }}>{loc.name || loc.city}</div>
-                        {loc.address && (
-                          <div style={{ fontSize: 13, color: "#6b7280", marginTop: 4 }}>
-                            {[loc.address, loc.district, loc.city, loc.country].filter(Boolean).join(", ")}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        ) : (
-          <div style={{ padding: "60px 0", textAlign: "center", color: "#9ca3af", fontSize: 14 }}>
-            Could not load job details. Please try again.
-          </div>
-        )}
-      </Modal>
+      <ApplyJobModal 
+        isOpen={applyModalOpen}
+        onClose={handleModalClose}
+        job={applyingJob}
+        primaryColor={primaryColor}
+      />
 
     </section>
     </ConfigProvider>
