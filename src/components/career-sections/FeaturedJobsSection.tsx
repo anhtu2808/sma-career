@@ -568,7 +568,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                         cursor: "pointer", transition: "all 0.2s",
                         background: "transparent", color: primaryColor,
                         border: `1.5px solid ${primaryColor}`, display: "block",
-                        width: "100%", textAlign: "center",
+                        width: "140px", marginLeft: "auto", textAlign: "center",
                       }}
                     >View Detail</button>
                     <button
@@ -576,7 +576,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                       style={{
                         ...(btnStyles[buttonStyle] || btnStyles.flat),
                         marginTop: "6px", padding: "6px 16px", fontSize: "12px",
-                        display: "block", width: "100%", textAlign: "center",
+                        display: "block", width: "140px", marginLeft: "auto", textAlign: "center",
                       }}
                     >Apply Now</button>
                   </div>
