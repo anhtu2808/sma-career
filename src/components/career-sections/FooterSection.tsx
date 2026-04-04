@@ -1,3 +1,5 @@
+"use client";
+
 import type { FlatTheme, FooterConfig } from "@/types/career-page";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { resolveIcon } from "@/utils/icons";
