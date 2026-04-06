@@ -230,7 +230,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
         <h2 style={{ fontSize: "32px", fontWeight: 700, color: textColor, marginBottom: "8px" }}>{headline}</h2>
       </div>
 
-      <div style={{ display: "flex", gap: "28px", maxWidth: "1100px", margin: "0 auto", alignItems: "flex-start" }}>
+      <div style={{ display: "flex", gap: "28px", maxWidth: "1280px", margin: "0 auto", alignItems: "flex-start" }}>
         {/* ─── Filter Sidebar ──────────────────────────────────── */}
         <div style={{
           width: "280px", flexShrink: 0,

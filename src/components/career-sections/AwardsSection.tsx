@@ -39,7 +39,7 @@ export default function AwardsSection({ theme, sectionProps = {}, settings = {} 
 
       <div style={{
         display: 'flex', gap: '28px', justifyContent: 'center', flexWrap: 'wrap',
-        maxWidth: '1100px', margin: '0 auto',
+        maxWidth: '1280px', margin: '0 auto',
       }}>
         {items.filter(item => item.isVisible !== false).map((item, i) => (
           <div key={i} style={{

@@ -32,7 +32,7 @@ export default function AboutSection({ theme, sectionProps = {}, settings = {} }
     }}>
       <div style={{
         display: 'flex', gap: '40px', alignItems: 'center',
-        maxWidth: '1100px', margin: '0 auto',
+        maxWidth: '1280px', margin: '0 auto',
         flexDirection: imageUrl ? 'row' : 'column',
       }}>
         {imageUrl && (

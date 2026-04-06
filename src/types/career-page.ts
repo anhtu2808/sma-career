@@ -83,6 +83,7 @@ export interface LayoutSectionSettings {
   textAlign?: string;
   backgroundColorOverride?: string;
   height?: number;
+  textColorOverride?: string;
   [key: string]: unknown;
 }
 

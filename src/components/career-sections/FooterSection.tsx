@@ -28,7 +28,7 @@ export default function FooterSection({ theme, footerConfig }: FooterSectionProp
     <footer style={{ background: '#1a1a2e', padding: '48px 40px', color: '#fff' }}>
       <div style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start',
-        gap: '40px', maxWidth: '960px', margin: '0 auto',
+        gap: '40px', maxWidth: '1280px', margin: '0 auto',
         flexWrap: 'wrap',
       }}>
         <div style={{ flex: 1, minWidth: '260px', maxWidth: '400px' }}>

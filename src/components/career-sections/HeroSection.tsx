@@ -60,16 +60,16 @@ export default function HeroSection({ theme, sectionProps = {}, settings = {} }:
         borderRadius: '50%', background: 'rgba(255,255,255,0.05)',
       }} />
 
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: '800px', margin: '0 auto' }}>
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
         <h1 style={{
-          fontSize: 'clamp(32px, 5vw, 50px)', fontWeight: 800, color: '#fff',
+          fontSize: 'clamp(32px, 5vw, 50px)', fontWeight: 800, color: settings.textColorOverride || '#fff',
           lineHeight: 1.2, marginBottom: '20px', letterSpacing: '-0.5px', whiteSpace: 'nowrap',
         }}>
           {headline}
         </h1>
 
         <p style={{
-          fontSize: '18px', color: 'rgba(255,255,255,0.85)',
+          fontSize: '18px', color: settings.textColorOverride || 'rgba(255,255,255,0.85)',
           maxWidth: '560px', margin: '0 auto 40px', lineHeight: 1.7,
           opacity: 0.8,
         }}>

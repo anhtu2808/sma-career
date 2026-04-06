@@ -43,7 +43,7 @@ export default function JobDetailView({ slug, jobDetail, theme }: JobDetailViewP
   return (
     <ConfigProvider theme={{ token: { colorPrimary: primaryColor, borderRadius } }}>
       <div style={{ 
-        maxWidth: 900, 
+        maxWidth: 1200, 
         margin: "0 auto", 
         padding: "40px 20px", 
         fontFamily: `'${theme.fontFamily || "Inter"}', sans-serif`,
