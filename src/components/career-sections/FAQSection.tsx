@@ -47,7 +47,6 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
                 border: '1px solid rgba(0,0,0,0.08)',
                 marginBottom: '10px',
                 overflow: 'hidden',
-                transition: 'all 0.2s',
                 background: '#fff',
               }}
             >

@@ -90,7 +90,6 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
               border: '1px solid rgba(0,0,0,0.06)',
               textAlign: 'left',
               height: '100%',
-              transition: 'transform 0.2s',
               cursor: item.url ? 'pointer' : 'default',
             }}>
               <div style={{

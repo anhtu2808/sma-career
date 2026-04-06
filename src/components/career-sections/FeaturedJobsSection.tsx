@@ -412,7 +412,6 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                   padding: "20px 24px", display: "flex", alignItems: "flex-start",
                   gap: "16px", boxShadow: shadowMap[shadow],
                   border: "1px solid rgba(0,0,0,0.06)", textAlign: "left",
-                  transition: "box-shadow 0.2s, transform 0.2s",
                 }}>
                   {/* Job details */}
                   <div style={{ flex: 1, minWidth: 0 }}>

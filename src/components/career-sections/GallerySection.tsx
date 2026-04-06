@@ -42,7 +42,6 @@ export default function GallerySection({ theme, sectionProps = {}, settings = {}
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: '32px', color: `${primaryColor}40`,
                 border: '1px solid rgba(0,0,0,0.04)',
-                transition: 'transform 0.2s',
               }}
             >
               {!isUrl && '🖼'}
