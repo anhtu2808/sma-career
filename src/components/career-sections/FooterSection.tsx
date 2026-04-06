@@ -13,6 +13,7 @@ export default function FooterSection({ theme, footerConfig }: FooterSectionProp
   const { primaryColor } = theme;
   const {
     companyName = 'SmartRecruit',
+    logoUrl,
     contact = {},
     socialLinks = [],
     copyrightText = '© 2026 SmartRecruit. All rights reserved.',
@@ -25,7 +26,7 @@ export default function FooterSection({ theme, footerConfig }: FooterSectionProp
   ];
 
   return (
-    <footer style={{ background: '#1a1a2e', padding: '48px 40px', color: '#fff' }}>
+    <footer style={{ background: footerConfig.backgroundColorOverride || '#1a1a2e', padding: '48px 40px', color: footerConfig.textColorOverride || '#fff' }}>
       <div style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start',
         gap: '40px', maxWidth: '1280px', margin: '0 auto',
@@ -33,20 +34,24 @@ export default function FooterSection({ theme, footerConfig }: FooterSectionProp
       }}>
         <div style={{ flex: 1, minWidth: '260px', maxWidth: '400px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-            <div style={{
-              width: 32, height: 32, borderRadius: '50%',
-              background: primaryColor, display: 'flex', alignItems: 'center',
-              justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '12px',
-            }}>SR</div>
+            {logoUrl ? (
+              <img src={logoUrl} alt={companyName} style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+            ) : (
+              <div style={{
+                width: 32, height: 32, borderRadius: '50%',
+                background: primaryColor, display: 'flex', alignItems: 'center',
+                justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '12px',
+              }}>SR</div>
+            )}
             <span style={{ fontWeight: 700, fontSize: '15px' }}>{companyName}</span>
           </div>
           {contact?.email && (
-            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)', marginBottom: '8px' }}>
+            <p style={{ fontSize: '12px', color: 'inherit', opacity: 0.6, marginBottom: '8px' }}>
               ✉ {contact.email}
             </p>
           )}
           {contact?.phone && (
-            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)', marginBottom: '8px' }}>
+            <p style={{ fontSize: '12px', color: 'inherit', opacity: 0.6, marginBottom: '8px' }}>
               ☎ {contact.phone}
             </p>
           )}
@@ -105,7 +110,7 @@ export default function FooterSection({ theme, footerConfig }: FooterSectionProp
         <div style={{ flex: 1, minWidth: '260px', maxWidth: '400px', textAlign: 'right' }}>
           <div style={{ fontSize: '14px', fontWeight: 700, marginBottom: '16px' }}>Our Locations</div>
           {contact?.addresses && contact.addresses.map((addr, i) => (
-            <p key={`addr-${i}`} style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, marginBottom: '10px' }}>
+            <p key={`addr-${i}`} style={{ fontSize: '13px', color: 'inherit', opacity: 0.75, lineHeight: 1.6, marginBottom: '10px' }}>
               {addr}
             </p>
           ))}
@@ -113,10 +118,10 @@ export default function FooterSection({ theme, footerConfig }: FooterSectionProp
       </div>
 
       <div style={{
-        borderTop: '1px solid rgba(255,255,255,0.1)',
-        marginTop: '36px', paddingTop: '20px',
-        textAlign: 'center', fontSize: '12px', color: 'rgba(255,255,255,0.3)',
+        marginTop: '36px', paddingTop: '20px', position: 'relative',
+        textAlign: 'center', fontSize: '12px', color: 'inherit', opacity: 0.5,
       }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'currentColor', opacity: 0.15 }} />
         {copyrightText}
       </div>
     </footer>

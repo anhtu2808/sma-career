@@ -35,9 +35,14 @@ export default function HeroSection({ theme, sectionProps = {}, settings = {} }:
     display: 'inline-block',
   };
 
-  const bgStyle: React.CSSProperties = backgroundUrl
-    ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${backgroundUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-    : { background: `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}DD 50%, ${primaryColor}99 100%)` };
+  let bgStyle: React.CSSProperties = {};
+  if (backgroundUrl) {
+    bgStyle = { backgroundImage: `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${backgroundUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' };
+  } else if (settings.backgroundColorOverride && settings.backgroundColorOverride.trim() !== '') {
+    bgStyle = { background: settings.backgroundColorOverride };
+  } else {
+    bgStyle = { background: `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}DD 50%, ${primaryColor}99 100%)` };
+  }
 
   return (
     <section style={{
