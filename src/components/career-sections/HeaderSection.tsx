@@ -1,4 +1,5 @@
 import type { FlatTheme, HeaderConfig } from "@/types/career-page";
+import { buildPath } from "@/utils/navigation";
 
 interface HeaderSectionProps {
   theme: FlatTheme;
@@ -28,8 +29,8 @@ export default function HeaderSection({ theme, headerConfig, companyName = 'Comp
    *  - On sub-pages like Job Detail (slug provided), use full path: /slug#sectionId
    */
   const buildNavHref = (targetSectionId?: string) => {
-    if (!targetSectionId) return slug ? `/${slug}` : '#';
-    return slug ? `/${slug}#${targetSectionId}` : `#${targetSectionId}`;
+    if (!targetSectionId) return slug ? buildPath(slug) : '#';
+    return slug ? buildPath(slug, '', targetSectionId) : `#${targetSectionId}`;
   };
 
   const btnBase: React.CSSProperties = {
@@ -59,7 +60,7 @@ export default function HeaderSection({ theme, headerConfig, companyName = 'Comp
       borderBottom: '1px solid rgba(0,0,0,0.08)',
       ...(headerConfig.sticky ? { position: 'sticky', top: 0, zIndex: 100 } : {}),
     }}>
-      <a href={slug ? `/${slug}` : '/'} style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
+      <a href={slug ? buildPath(slug) : '/'} style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
         {logoUrl ? (
           <img src={logoUrl} alt="Logo" style={{ height: `${logoHeight}px`, objectFit: 'contain' }} />
         ) : (

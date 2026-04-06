@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { buildPath } from "@/utils/navigation";
 import { ConfigProvider } from "antd";
 import type { FlatTheme } from "@/types/career-page";
 import type { JobDetailData, JobApiItem } from "@/lib/api";
@@ -27,7 +28,7 @@ export default function JobDetailView({ slug, jobDetail, theme }: JobDetailViewP
       <div style={{ padding: "100px 0", textAlign: "center", color: "#9ca3af", fontSize: 16 }}>
         Could not load job details. The job might have been closed or removed.
         <div style={{ marginTop: 20 }}>
-          <Link href={`/${slug}`} style={{ color: primaryColor, textDecoration: "none", fontWeight: 600 }}>
+          <Link href={buildPath(slug)} style={{ color: primaryColor, textDecoration: "none", fontWeight: 600 }}>
              ← Return to Career Page
           </Link>
         </div>
@@ -49,7 +50,7 @@ export default function JobDetailView({ slug, jobDetail, theme }: JobDetailViewP
         color: textColor
       }}>
         {/* Back Link */}
-        <Link href={`/${slug}`} style={{ 
+        <Link href={buildPath(slug)} style={{ 
           display: "inline-flex", alignItems: "center", gap: 6,
           color: "#6b7280", textDecoration: "none", fontWeight: 600, fontSize: 14,
           marginBottom: 24, transition: "color 0.2s"

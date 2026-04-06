@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Select, Slider, ConfigProvider } from "antd";
 import type { FlatTheme, LayoutSectionSettings } from "@/types/career-page";
 import { fetchJobs, fetchSkills, fetchExpertises, fetchDomains, type JobApiItem } from "@/lib/api";
+import { buildPath } from "@/utils/navigation";
 import ApplyJobModal from "./ApplyJobModal";
 
 interface FeaturedJobsSectionProps {
@@ -179,8 +180,8 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
   };
 
   const handleViewDetail = (job: JobApiItem) => {
-    const slug = params.slug;
-    router.push(`/${slug}/jobs/${job.id}`);
+    const slug = params.slug as string;
+    router.push(buildPath(slug, `/jobs/${job.id}`));
   };
 
   const handleModalClose = () => {
