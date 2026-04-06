@@ -44,18 +44,9 @@ html {
   }
 }
 
-/* Hover effects for interactive elements */
-a:hover {
-  opacity: 0.85;
-}
-
+/* Hover effects — buttons only */
 button:hover {
   opacity: 0.9;
-}
-
-/* Card hover effects */
-section > div > div > div:hover {
-  transform: translateY(-2px);
 }
 
 /* Custom scrollbar */

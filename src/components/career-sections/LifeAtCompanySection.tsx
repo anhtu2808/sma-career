@@ -47,7 +47,7 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
     }}>
       <div style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-        maxWidth: '1100px', margin: '0 auto 40px',
+        maxWidth: '1280px', margin: '0 auto 40px',
       }}>
         <h2 style={{ fontSize: '32px', fontWeight: 700, color: textColor, margin: 0 }}>
           {headline}
@@ -78,7 +78,7 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
 
       <div style={{
         display: 'grid', gridTemplateColumns: `repeat(${Math.min(visibleNews.length, 3)}, 1fr)`,
-        gap: '28px', maxWidth: '1100px', margin: '0 auto',
+        gap: '28px', maxWidth: '1280px', margin: '0 auto',
       }}>
         {visibleNews.map((item, i) => {
           const cardContent = (
@@ -90,7 +90,6 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
               border: '1px solid rgba(0,0,0,0.06)',
               textAlign: 'left',
               height: '100%',
-              transition: 'transform 0.2s',
               cursor: item.url ? 'pointer' : 'default',
             }}>
               <div style={{

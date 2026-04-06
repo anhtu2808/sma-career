@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Select, Slider, ConfigProvider } from "antd";
 import type { FlatTheme, LayoutSectionSettings } from "@/types/career-page";
 import { fetchJobs, fetchSkills, fetchExpertises, fetchDomains, type JobApiItem } from "@/lib/api";
+import { buildPath } from "@/utils/navigation";
 import ApplyJobModal from "./ApplyJobModal";
 
 interface FeaturedJobsSectionProps {
@@ -179,8 +180,8 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
   };
 
   const handleViewDetail = (job: JobApiItem) => {
-    const slug = params.slug;
-    router.push(`/${slug}/jobs/${job.id}`);
+    const slug = params.slug as string;
+    router.push(buildPath(slug, `/jobs/${job.id}`));
   };
 
   const handleModalClose = () => {
@@ -229,7 +230,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
         <h2 style={{ fontSize: "32px", fontWeight: 700, color: textColor, marginBottom: "8px" }}>{headline}</h2>
       </div>
 
-      <div style={{ display: "flex", gap: "28px", maxWidth: "1100px", margin: "0 auto", alignItems: "flex-start" }}>
+      <div style={{ display: "flex", gap: "28px", maxWidth: "1280px", margin: "0 auto", alignItems: "flex-start" }}>
         {/* ─── Filter Sidebar ──────────────────────────────────── */}
         <div style={{
           width: "280px", flexShrink: 0,
@@ -411,7 +412,6 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                   padding: "20px 24px", display: "flex", alignItems: "flex-start",
                   gap: "16px", boxShadow: shadowMap[shadow],
                   border: "1px solid rgba(0,0,0,0.06)", textAlign: "left",
-                  transition: "box-shadow 0.2s, transform 0.2s",
                 }}>
                   {/* Job details */}
                   <div style={{ flex: 1, minWidth: 0 }}>

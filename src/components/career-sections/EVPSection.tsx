@@ -46,7 +46,7 @@ export default function EVPSection({ theme, sectionProps = {}, settings = {} }: 
 
       <div style={{
         display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px',
-        maxWidth: '1100px', margin: '0 auto',
+        maxWidth: '1280px', margin: '0 auto',
       }}>
         {items.filter(b => b.isVisible !== false).map((b, i) => (
           <div key={i} style={{

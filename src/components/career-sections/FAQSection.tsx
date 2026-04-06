@@ -36,7 +36,7 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
         {headline}
       </h2>
 
-      <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'left' }}>
+      <div style={{ maxWidth: '1080px', margin: '0 auto', textAlign: 'left' }}>
         {items.filter(item => item.isVisible !== false).map((item, i) => {
           const isOpen = openIndex === i;
           return (
@@ -47,7 +47,6 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
                 border: '1px solid rgba(0,0,0,0.08)',
                 marginBottom: '10px',
                 overflow: 'hidden',
-                transition: 'all 0.2s',
                 background: '#fff',
               }}
             >

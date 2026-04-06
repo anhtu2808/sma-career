@@ -35,9 +35,14 @@ export default function HeroSection({ theme, sectionProps = {}, settings = {} }:
     display: 'inline-block',
   };
 
-  const bgStyle: React.CSSProperties = backgroundUrl
-    ? { backgroundImage: `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${backgroundUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-    : { background: `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}DD 50%, ${primaryColor}99 100%)` };
+  let bgStyle: React.CSSProperties = {};
+  if (backgroundUrl) {
+    bgStyle = { backgroundImage: `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${backgroundUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' };
+  } else if (settings.backgroundColorOverride && settings.backgroundColorOverride.trim() !== '') {
+    bgStyle = { background: settings.backgroundColorOverride };
+  } else {
+    bgStyle = { background: `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}DD 50%, ${primaryColor}99 100%)` };
+  }
 
   return (
     <section style={{
@@ -46,6 +51,10 @@ export default function HeroSection({ theme, sectionProps = {}, settings = {} }:
       textAlign: (settings.textAlign as React.CSSProperties['textAlign']) || 'center',
       position: 'relative',
       overflow: 'hidden',
+      minHeight: settings.height ? `${settings.height}px` : undefined,
+      display: settings.height ? 'flex' : 'block',
+      flexDirection: settings.height ? 'column' : undefined,
+      justifyContent: settings.height ? 'center' : undefined,
     }}>
       <div style={{
         position: 'absolute', top: -60, right: -60, width: 200, height: 200,
@@ -56,16 +65,16 @@ export default function HeroSection({ theme, sectionProps = {}, settings = {} }:
         borderRadius: '50%', background: 'rgba(255,255,255,0.05)',
       }} />
 
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: '800px', margin: '0 auto' }}>
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
         <h1 style={{
-          fontSize: 'clamp(32px, 5vw, 50px)', fontWeight: 800, color: '#fff',
+          fontSize: 'clamp(32px, 5vw, 50px)', fontWeight: 800, color: settings.textColorOverride || '#fff',
           lineHeight: 1.2, marginBottom: '20px', letterSpacing: '-0.5px', whiteSpace: 'nowrap',
         }}>
           {headline}
         </h1>
 
         <p style={{
-          fontSize: '18px', color: 'rgba(255,255,255,0.85)',
+          fontSize: '18px', color: settings.textColorOverride || 'rgba(255,255,255,0.85)',
           maxWidth: '560px', margin: '0 auto 40px', lineHeight: 1.7,
           opacity: 0.8,
         }}>

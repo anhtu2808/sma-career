@@ -24,7 +24,7 @@ export default function GallerySection({ theme, sectionProps = {}, settings = {}
 
       <div style={{
         display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '12px', maxWidth: '800px', margin: '0 auto',
+        gap: '12px', maxWidth: '1280px', margin: '0 auto',
       }}>
         {placeholders.map((item, i) => {
           const isUrl = typeof item === 'string' && item.startsWith('http');
@@ -42,7 +42,6 @@ export default function GallerySection({ theme, sectionProps = {}, settings = {}
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: '32px', color: `${primaryColor}40`,
                 border: '1px solid rgba(0,0,0,0.04)',
-                transition: 'transform 0.2s',
               }}
             >
               {!isUrl && '🖼'}

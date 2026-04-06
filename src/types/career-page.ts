@@ -82,6 +82,8 @@ export interface LayoutSectionSettings {
   paddingBottom?: number;
   textAlign?: string;
   backgroundColorOverride?: string;
+  height?: number;
+  textColorOverride?: string;
   [key: string]: unknown;
 }
 
@@ -108,10 +110,13 @@ export interface SocialLink {
 
 export interface FooterConfig {
   companyName?: string;
+  logoUrl?: string;
   address?: string;
   contact?: ContactInfo;
   socialLinks?: SocialLink[];
   copyrightText?: string;
+  backgroundColorOverride?: string;
+  textColorOverride?: string;
   _visible?: boolean;
   [key: string]: unknown;
 }
