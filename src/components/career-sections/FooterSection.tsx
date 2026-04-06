@@ -103,7 +103,7 @@ export default function FooterSection({ theme, footerConfig }: FooterSectionProp
         </div>
 
         <div style={{ flex: 1, minWidth: '260px', maxWidth: '400px', textAlign: 'right' }}>
-          <div style={{ fontSize: '14px', fontWeight: 700, marginBottom: '16px' }}>Hệ thống cơ sở</div>
+          <div style={{ fontSize: '14px', fontWeight: 700, marginBottom: '16px' }}>Our Locations</div>
           {contact?.addresses && contact.addresses.map((addr, i) => (
             <p key={`addr-${i}`} style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, marginBottom: '10px' }}>
               {addr}
