@@ -82,6 +82,7 @@ export interface LayoutSectionSettings {
   paddingBottom?: number;
   textAlign?: string;
   backgroundColorOverride?: string;
+  height?: number;
   [key: string]: unknown;
 }
 

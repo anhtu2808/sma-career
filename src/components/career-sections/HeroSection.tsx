@@ -46,6 +46,10 @@ export default function HeroSection({ theme, sectionProps = {}, settings = {} }:
       textAlign: (settings.textAlign as React.CSSProperties['textAlign']) || 'center',
       position: 'relative',
       overflow: 'hidden',
+      minHeight: settings.height ? `${settings.height}px` : undefined,
+      display: settings.height ? 'flex' : 'block',
+      flexDirection: settings.height ? 'column' : undefined,
+      justifyContent: settings.height ? 'center' : undefined,
     }}>
       <div style={{
         position: 'absolute', top: -60, right: -60, width: 200, height: 200,
