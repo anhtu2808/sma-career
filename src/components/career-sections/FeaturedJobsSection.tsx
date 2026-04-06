@@ -293,6 +293,10 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
               mode="multiple"
               showSearch
               allowClear
+              optionFilterProp="label"
+              filterOption={(input, option) =>
+                (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())
+              }
               options={skillOptions}
               value={selectedSkills}
               onChange={(val) => { setSelectedSkills(val); setCurrentPage(1); }}
@@ -346,6 +350,10 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
               mode="multiple"
               showSearch
               allowClear
+              optionFilterProp="label"
+              filterOption={(input, option) =>
+                (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())
+              }
               options={expertiseOptions}
               value={selectedExpertises}
               onChange={(val) => { setSelectedExpertises(val); setCurrentPage(1); }}
@@ -361,6 +369,10 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
               mode="multiple"
               showSearch
               allowClear
+              optionFilterProp="label"
+              filterOption={(input, option) =>
+                (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())
+              }
               options={domainOptions}
               value={selectedDomains}
               onChange={(val) => { setSelectedDomains(val); setCurrentPage(1); }}
@@ -416,9 +428,12 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                   {/* Job details */}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px", flexWrap: "wrap" }}>
-                      <span style={{ fontSize: "15px", fontWeight: 700, color: textColor }}>
+                      <a 
+                        onClick={() => handleViewDetail(job)}
+                        style={{ fontSize: "15px", fontWeight: 700, color: textColor, cursor: "pointer", textDecoration: "none" }}
+                      >
                         {job.name}
-                      </span>
+                      </a>
                       {job.isHighlight && (
                         <span style={{
                           padding: "1px 8px", borderRadius: "4px", fontSize: "10px",
