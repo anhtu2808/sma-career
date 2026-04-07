@@ -49,15 +49,6 @@ export default function JobDetailView({ slug, jobDetail, theme }: JobDetailViewP
         fontFamily: `'${theme.fontFamily || "Inter"}', sans-serif`,
         color: textColor
       }}>
-        {/* Back Link */}
-        <Link href={buildPath(slug)} style={{ 
-          display: "inline-flex", alignItems: "center", gap: 6,
-          color: "#6b7280", textDecoration: "none", fontWeight: 600, fontSize: 14,
-          marginBottom: 24, transition: "color 0.2s"
-        }}>
-          <span>←</span> Back to all jobs
-        </Link>
-        
         {/* Main Card */}
         <div style={{ 
           background: "#fff", 

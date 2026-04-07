@@ -60,7 +60,7 @@ export default function HeaderSection({ theme, headerConfig, companyName = 'Comp
       borderBottom: '1px solid rgba(0,0,0,0.08)',
       ...(headerConfig.sticky ? { position: 'sticky', top: 0, zIndex: 100 } : {}),
     }}>
-      <a href={slug ? buildPath(slug) : '/'} style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
         {logoUrl ? (
           <img src={logoUrl} alt="Logo" style={{ height: `${logoHeight}px`, objectFit: 'contain' }} />
         ) : (
@@ -74,7 +74,7 @@ export default function HeaderSection({ theme, headerConfig, companyName = 'Comp
           </div>
         )}
         <span style={{ fontWeight: 700, fontSize: '16px', color: textColor }}>{companyName}</span>
-      </a>
+      </div>
 
       <nav style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
         {defaultNavLinks
