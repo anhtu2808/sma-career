@@ -14,6 +14,7 @@ export default function FooterSection({ theme, footerConfig }: FooterSectionProp
   const {
     companyName = 'SmartRecruit',
     logoUrl,
+    logoHeight = 32,
     contact = {},
     socialLinks = [],
     copyrightText = '© 2026 SmartRecruit. All rights reserved.',
@@ -35,12 +36,12 @@ export default function FooterSection({ theme, footerConfig }: FooterSectionProp
         <div style={{ flex: 1, minWidth: '260px', maxWidth: '400px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
             {logoUrl ? (
-              <img src={logoUrl} alt={companyName} style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+              <img src={logoUrl} alt={companyName} style={{ height: `${logoHeight}px`, width: 'auto', objectFit: 'contain' }} />
             ) : (
               <div style={{
-                width: 32, height: 32, borderRadius: '50%',
+                width: logoHeight, height: logoHeight, borderRadius: '50%',
                 background: primaryColor, display: 'flex', alignItems: 'center',
-                justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '12px',
+                justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: `${Math.max(12, logoHeight * 0.4)}px`,
               }}>SR</div>
             )}
             <span style={{ fontWeight: 700, fontSize: '15px' }}>{companyName}</span>

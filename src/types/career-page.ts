@@ -111,6 +111,7 @@ export interface SocialLink {
 export interface FooterConfig {
   companyName?: string;
   logoUrl?: string;
+  logoHeight?: number;
   address?: string;
   contact?: ContactInfo;
   socialLinks?: SocialLink[];
