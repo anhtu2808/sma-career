@@ -40,16 +40,26 @@ export default function JobDetailView({ slug, jobDetail, theme }: JobDetailViewP
     setApplyModalOpen(true);
   };
 
+  const fontUrl = theme.fontFamily && theme.fontFamily !== "Inter" 
+    ? `https://fonts.googleapis.com/css2?family=${theme.fontFamily.replace(/\s+/g, '+')}:wght@300;400;500;600;700;800&display=swap`
+    : null;
+
   return (
-    <ConfigProvider theme={{ token: { colorPrimary: primaryColor, borderRadius } }}>
-      <div style={{ 
-        maxWidth: 1200, 
-        margin: "0 auto", 
-        padding: "40px 20px", 
-        fontFamily: `'${theme.fontFamily || "Inter"}', sans-serif`,
-        color: textColor
-      }}>
-        {/* Main Card */}
+    <>
+      {fontUrl && (
+        <style dangerouslySetInnerHTML={{
+          __html: `@import url('${fontUrl}');`
+        }} />
+      )}
+      <ConfigProvider theme={{ token: { colorPrimary: primaryColor, borderRadius } }}>
+        <div style={{ 
+          maxWidth: 1200, 
+          margin: "0 auto", 
+          padding: "40px 20px", 
+          fontFamily: `'${theme.fontFamily || "Inter"}', sans-serif`,
+          color: textColor
+        }}>
+          {/* Main Card */}
         <div style={{ 
           background: "#fff", 
           borderRadius: `${borderRadius}px`, 
@@ -94,6 +104,7 @@ export default function JobDetailView({ slug, jobDetail, theme }: JobDetailViewP
         job={jobDetail as JobApiItem}
         primaryColor={primaryColor}
       />
-    </ConfigProvider>
+      </ConfigProvider>
+    </>
   );
 }
