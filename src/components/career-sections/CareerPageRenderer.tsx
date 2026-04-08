@@ -85,18 +85,29 @@ export default function CareerPageRenderer({
     }
   }, []);
 
+  // dynamically load google font if it's not Inter
+  const fontUrl = theme.fontFamily && theme.fontFamily !== "Inter" 
+    ? `https://fonts.googleapis.com/css2?family=${theme.fontFamily.replace(/\s+/g, '+')}:wght@300;400;500;600;700;800&display=swap`
+    : null;
+
   return (
-    <div
-      style={{
-        fontFamily: `'${theme.fontFamily || "Inter"}', sans-serif`,
-        fontSize: `${theme.baseFontSize}px`,
-        color: theme.textColor,
-        background: theme.backgroundColor,
-        minHeight: "100vh",
-      }}
-    >
-      {/* Header */}
-      {showHeader && (
+    <>
+      {fontUrl && (
+        <style dangerouslySetInnerHTML={{
+          __html: `@import url('${fontUrl}');`
+        }} />
+      )}
+      <div
+        style={{
+          fontFamily: `'${theme.fontFamily || "Inter"}', sans-serif`,
+          fontSize: `${theme.baseFontSize}px`,
+          color: theme.textColor,
+          background: theme.backgroundColor,
+          minHeight: "100vh",
+        }}
+      >
+        {/* Header */}
+        {showHeader && (
         <HeaderSection
           theme={theme}
           headerConfig={headerConfig}
@@ -129,8 +140,8 @@ export default function CareerPageRenderer({
         );
       })}
 
-      {/* Footer */}
       {showFooter && <FooterSection theme={theme} footerConfig={footerConfig} />}
-    </div>
+      </div>
+    </>
   );
 }
