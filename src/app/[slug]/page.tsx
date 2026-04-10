@@ -38,6 +38,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const meta = data.metaConfig || {};
+  const iconUrl = meta.faviconUrl || data.headerConfig?.logoUrl;
 
   return {
     title: (meta.seoTitle as string) || `${slug} - Career Page`,
@@ -47,6 +48,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: (meta.seoDescription as string) || "Explore career opportunities",
       images: (meta.ogImage as string) ? [{ url: meta.ogImage as string }] : [],
     },
+    icons: iconUrl ? { icon: iconUrl as string } : undefined,
   };
 }
 

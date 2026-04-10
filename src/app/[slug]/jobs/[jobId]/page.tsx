@@ -28,14 +28,19 @@ function flattenTheme(tc: ThemeConfig): FlatTheme {
 }
 
 export async function generateMetadata({ params }: JobPageProps): Promise<Metadata> {
-  const { jobId } = await params;
+  const { slug, jobId } = await params;
   
+  // Try to fetch career page data for favicon
+  const pageData = await getCareerPageBySlug(slug).catch(() => null);
+  const iconUrl = pageData?.metaConfig?.faviconUrl || pageData?.headerConfig?.logoUrl || undefined;
+
   try {
     const jobDetail = await fetchJobDetail(Number(jobId));
     if (jobDetail) {
       return {
         title: `${jobDetail.name} at ${jobDetail.company?.name || "Company"}`,
         description: `Apply for ${jobDetail.name} role in ${jobDetail.locations?.map(l => l.city).join(", ")}.`,
+        icons: iconUrl ? { icon: iconUrl as string } : undefined,
       };
     }
   } catch (error) {
@@ -45,6 +50,7 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
   return {
     title: "Job Details - Career Page",
     description: "Explore career opportunities",
+    icons: iconUrl ? { icon: iconUrl as string } : undefined,
   };
 }
 
