@@ -40,7 +40,7 @@ export default function EVPSection({ theme, sectionProps = {}, settings = {} }: 
       padding: `${settings.paddingTop || 64}px 40px ${settings.paddingBottom || 64}px`,
       textAlign: 'center',
     }}>
-      <h2 style={{ fontSize: '32px', fontWeight: 700, color: textColor, marginBottom: '40px' }}>
+      <h2 style={{ fontSize: '2rem', fontWeight: 700, color: textColor, marginBottom: '40px' }}>
         {headline}
       </h2>
 
@@ -60,7 +60,7 @@ export default function EVPSection({ theme, sectionProps = {}, settings = {} }: 
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
               <div style={{
-                fontSize: '28px',
+                fontSize: '1.75rem',
                 color: primaryColor,
                 width: '52px', height: '52px',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -71,10 +71,10 @@ export default function EVPSection({ theme, sectionProps = {}, settings = {} }: 
               </div>
             </div>
 
-            <div style={{ fontSize: '18px', fontWeight: 700, color: textColor, marginBottom: '8px' }}>
+            <div style={{ fontSize: '1.125rem', fontWeight: 700, color: textColor, marginBottom: '8px' }}>
               {b.title}
             </div>
-            <div style={{ fontSize: '14px', color: textColor, opacity: 0.6, lineHeight: 1.7 }}>
+            <div style={{ fontSize: '0.875rem', color: textColor, opacity: 0.6, lineHeight: 1.7 }}>
               {b.desc}
             </div>
           </div>

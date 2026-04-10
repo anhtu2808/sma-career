@@ -56,10 +56,16 @@ export interface ThemeStyling {
   buttonStyle: string;
 }
 
+export interface ThemeEffects {
+  shadow: string;
+  spacing: string;
+}
+
 export interface ThemeConfig {
   colors: ThemeColors;
   typography: ThemeTypography;
   styling: ThemeStyling;
+  effects?: ThemeEffects;
   [key: string]: unknown;
 }
 

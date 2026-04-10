@@ -44,15 +44,15 @@ export default function FooterSection({ theme, footerConfig }: FooterSectionProp
                 justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: `${Math.max(12, logoHeight * 0.4)}px`,
               }}>SR</div>
             )}
-            <span style={{ fontWeight: 700, fontSize: '15px' }}>{companyName}</span>
+            <span style={{ fontWeight: 700, fontSize: '0.9375rem' }}>{companyName}</span>
           </div>
           {contact?.email && (
-            <p style={{ fontSize: '12px', color: 'inherit', opacity: 0.6, marginBottom: '8px' }}>
+            <p style={{ fontSize: '0.75rem', color: 'inherit', opacity: 0.6, marginBottom: '8px' }}>
               ✉ {contact.email}
             </p>
           )}
           {contact?.phone && (
-            <p style={{ fontSize: '12px', color: 'inherit', opacity: 0.6, marginBottom: '8px' }}>
+            <p style={{ fontSize: '0.75rem', color: 'inherit', opacity: 0.6, marginBottom: '8px' }}>
               ☎ {contact.phone}
             </p>
           )}
@@ -89,7 +89,7 @@ export default function FooterSection({ theme, footerConfig }: FooterSectionProp
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: iconColor,
-                    fontSize: '15px',
+                    fontSize: '0.9375rem',
                     transition: 'background 0.2s, transform 0.2s',
                     textDecoration: 'none',
                     cursor: 'pointer',
@@ -109,9 +109,9 @@ export default function FooterSection({ theme, footerConfig }: FooterSectionProp
         </div>
 
         <div style={{ flex: 1, minWidth: '260px', maxWidth: '400px', textAlign: 'right' }}>
-          <div style={{ fontSize: '14px', fontWeight: 700, marginBottom: '16px' }}>Our Locations</div>
+          <div style={{ fontSize: '0.875rem', fontWeight: 700, marginBottom: '16px' }}>Our Locations</div>
           {contact?.addresses && contact.addresses.map((addr, i) => (
-            <p key={`addr-${i}`} style={{ fontSize: '13px', color: 'inherit', opacity: 0.75, lineHeight: 1.6, marginBottom: '10px' }}>
+            <p key={`addr-${i}`} style={{ fontSize: '0.8125rem', color: 'inherit', opacity: 0.75, lineHeight: 1.6, marginBottom: '10px' }}>
               {addr}
             </p>
           ))}
@@ -120,7 +120,7 @@ export default function FooterSection({ theme, footerConfig }: FooterSectionProp
 
       <div style={{
         marginTop: '36px', paddingTop: '20px', position: 'relative',
-        textAlign: 'center', fontSize: '12px', color: 'inherit', opacity: 0.5,
+        textAlign: 'center', fontSize: '0.75rem', color: 'inherit', opacity: 0.5,
       }}>
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', background: 'currentColor', opacity: 0.15 }} />
         {copyrightText}

@@ -92,11 +92,12 @@ export default function CareerPageRenderer({
 
   return (
     <>
-      {fontUrl && (
-        <style dangerouslySetInnerHTML={{
-          __html: `@import url('${fontUrl}');`
-        }} />
-      )}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          ${fontUrl ? `@import url('${fontUrl}');` : ''}
+          :root { font-size: ${theme.baseFontSize}px; }
+        `
+      }} />
       <div
         style={{
           fontFamily: `'${theme.fontFamily || "Inter"}', sans-serif`,

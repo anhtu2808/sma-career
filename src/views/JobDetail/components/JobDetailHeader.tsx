@@ -12,13 +12,13 @@ export default function JobDetailHeader({ jobDetail, textColor }: JobDetailHeade
       display: "flex", alignItems: "flex-start", gap: 20,
     }}>
       <div style={{ flex: 1 }}>
-        <h1 style={{ fontSize: 26, fontWeight: 800, color: textColor, margin: 0, lineHeight: 1.3 }}>
+        <h1 style={{ fontSize: '1.625rem', fontWeight: 800, color: textColor, margin: 0, lineHeight: 1.3 }}>
           {jobDetail.name}
         </h1>
-        <div style={{ fontSize: 15, color: "#6b7280", marginTop: 8 }}>
+        <div style={{ fontSize: '0.9375rem', color: "#6b7280", marginTop: 8 }}>
           {jobDetail.company?.name || "Company"}
           {jobDetail.uploadTime && (
-            <span style={{ marginLeft: 8, fontSize: 13, opacity: 0.8 }}>
+            <span style={{ marginLeft: 8, fontSize: '0.8125rem', opacity: 0.8 }}>
               · Posted {new Date(jobDetail.uploadTime).toLocaleDateString()}
             </span>
           )}

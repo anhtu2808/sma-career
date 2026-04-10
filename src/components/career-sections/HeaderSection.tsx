@@ -36,7 +36,7 @@ export default function HeaderSection({ theme, headerConfig, companyName = 'Comp
   const btnBase: React.CSSProperties = {
     padding: '8px 20px',
     borderRadius: `${borderRadius}px`,
-    fontSize: '14px',
+    fontSize: '0.875rem',
     fontWeight: 600,
     cursor: 'pointer',
     transition: 'all 0.2s',
@@ -68,12 +68,12 @@ export default function HeaderSection({ theme, headerConfig, companyName = 'Comp
             width: 36, height: 36, borderRadius: '50%',
             background: primaryColor, display: 'flex',
             alignItems: 'center', justifyContent: 'center',
-            color: '#fff', fontWeight: 700, fontSize: '14px',
+            color: '#fff', fontWeight: 700, fontSize: '0.875rem',
           }}>
             SR
           </div>
         )}
-        <span style={{ fontWeight: 700, fontSize: '16px', color: textColor }}>{companyName}</span>
+        <span style={{ fontWeight: 700, fontSize: '1rem', color: textColor }}>{companyName}</span>
       </div>
 
       <nav style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
@@ -84,7 +84,7 @@ export default function HeaderSection({ theme, headerConfig, companyName = 'Comp
               key={i}
               href={buildNavHref(link.targetSectionId)}
               style={{
-                fontSize: '14px', color: textColor, opacity: 0.7,
+                fontSize: '0.875rem', color: textColor, opacity: 0.7,
                 cursor: 'pointer', textDecoration: 'none',
                 transition: 'opacity 0.2s',
               }}
