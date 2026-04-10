@@ -49,7 +49,7 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
         display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
         maxWidth: '1280px', margin: '0 auto 40px',
       }}>
-        <h2 style={{ fontSize: '32px', fontWeight: 700, color: textColor, margin: 0 }}>
+        <h2 style={{ fontSize: '2rem', fontWeight: 700, color: textColor, margin: 0 }}>
           {headline}
         </h2>
         {navLink.isVisible !== false && navLink.text && (
@@ -58,7 +58,7 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
             target={navLink.url?.startsWith('http') ? '_blank' : '_self'}
             rel="noopener noreferrer"
             style={{
-              fontSize: '14px',
+              fontSize: '0.875rem',
               fontWeight: 600,
               color: primaryColor,
               textDecoration: 'none',
@@ -71,7 +71,7 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
               transition: 'opacity 0.2s',
             }}
           >
-            {navLink.text} <span style={{ fontSize: '16px' }}>→</span>
+            {navLink.text} <span style={{ fontSize: '1rem' }}>→</span>
           </a>
         )}
       </div>
@@ -98,14 +98,14 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
                   ? `url(${item.thumbnailUrl}) center/cover no-repeat`
                   : secondaryColor || `linear-gradient(135deg, ${primaryColor}20, ${primaryColor}08)`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '36px',
+                fontSize: '2.25rem',
               }}>
               </div>
               <div style={{ padding: '20px 24px' }}>
-                <div style={{ fontSize: '16px', fontWeight: 700, color: textColor, marginBottom: '8px' }}>
+                <div style={{ fontSize: '1rem', fontWeight: 700, color: textColor, marginBottom: '8px' }}>
                   {item.title}
                 </div>
-                <div style={{ fontSize: '13px', color: textColor, opacity: 0.45 }}>
+                <div style={{ fontSize: '0.8125rem', color: textColor, opacity: 0.45 }}>
                   {item.date}
                 </div>
               </div>

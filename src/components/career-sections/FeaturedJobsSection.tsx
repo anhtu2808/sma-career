@@ -196,7 +196,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
 
   const btnBase: React.CSSProperties = {
     padding: "10px 24px", borderRadius: `${borderRadius}px`,
-    fontSize: "13px", fontWeight: 600, cursor: "pointer", transition: "all 0.2s",
+    fontSize: "0.8125rem", fontWeight: 600, cursor: "pointer", transition: "all 0.2s",
     textDecoration: "none", display: "inline-block", border: "none",
   };
   const btnStyles: Record<string, React.CSSProperties> = {
@@ -208,10 +208,10 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
 
   const inputStyle: React.CSSProperties = {
     width: "100%", padding: "8px 14px", borderRadius: `${borderRadius}px`,
-    border: "1px solid #d9d9d9", fontSize: "14px", outline: "none",
+    border: "1px solid #d9d9d9", fontSize: "0.875rem", outline: "none",
     color: textColor, background: "#fff", boxSizing: "border-box", transition: "all 0.2s"
   };
-  const labelStyle: React.CSSProperties = { fontSize: "14px", fontWeight: 700, color: textColor, marginBottom: "8px", display: "block" };
+  const labelStyle: React.CSSProperties = { fontSize: "0.875rem", fontWeight: 700, color: textColor, marginBottom: "8px", display: "block" };
   const fieldGap: React.CSSProperties = { marginBottom: "24px" };
 
   return (
@@ -227,7 +227,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
       padding: `${settings.paddingTop || 64}px 40px ${settings.paddingBottom || 64}px`,
     }}>
       <div style={{ textAlign: "center", marginBottom: "36px" }}>
-        <h2 style={{ fontSize: "32px", fontWeight: 700, color: textColor, marginBottom: "8px" }}>{headline}</h2>
+        <h2 style={{ fontSize: "2rem", fontWeight: 700, color: textColor, marginBottom: "8px" }}>{headline}</h2>
       </div>
 
       <div style={{ display: "flex", gap: "28px", maxWidth: "1280px", margin: "0 auto", alignItems: "flex-start" }}>
@@ -240,12 +240,12 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
         }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <span style={{ color: primaryColor, fontSize: "16px" }}>▼</span>
-              <span style={{ fontSize: "18px", fontWeight: 800, color: textColor }}>Filters</span>
+              <span style={{ color: primaryColor, fontSize: "1rem" }}>▼</span>
+              <span style={{ fontSize: "1.125rem", fontWeight: 800, color: textColor }}>Filters</span>
             </div>
             <button onClick={handleReset} style={{
               background: "none", border: "none", color: primaryColor,
-              fontSize: "13px", fontWeight: 600, cursor: "pointer",
+              fontSize: "0.8125rem", fontWeight: 600, cursor: "pointer",
             }}>Reset</button>
           </div>
 
@@ -309,7 +309,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
           <div style={fieldGap}>
             <label style={labelStyle}>
               Salary Range (VND)
-              <span style={{ fontSize: "12px", fontWeight: "normal", color: "#64748b", marginLeft: "8px" }}>
+              <span style={{ fontSize: "0.75rem", fontWeight: "normal", color: "#64748b", marginLeft: "8px" }}>
                 {`${salaryRange[0] === 0 ? "0" : `${salaryRange[0]}M`} - ${salaryRange[1] === 100 ? "100M+" : `${salaryRange[1]}M`}`}
               </span>
             </label>
@@ -328,7 +328,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
           <div style={fieldGap}>
             <label style={labelStyle}>
               Experience (Years)
-              <span style={{ fontSize: "12px", fontWeight: "normal", color: "#64748b", marginLeft: "8px" }}>
+              <span style={{ fontSize: "0.75rem", fontWeight: "normal", color: "#64748b", marginLeft: "8px" }}>
                 {experienceRange[0]} - {experienceRange[1] === 10 ? "10+" : experienceRange[1]} years
               </span>
             </label>
@@ -395,7 +395,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
           </div>
 
           {/* Results count */}
-          <div style={{ fontSize: "13px", color: textColor, opacity: 0.5, marginBottom: "14px" }}>
+          <div style={{ fontSize: "0.8125rem", color: textColor, opacity: 0.5, marginBottom: "14px" }}>
             {isLoading ? "Loading..." : `Showing ${paginatedJobs.length} / ${totalElements} jobs`}
           </div>
 
@@ -430,13 +430,13 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                     <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px", flexWrap: "wrap" }}>
                       <a 
                         onClick={() => handleViewDetail(job)}
-                        style={{ fontSize: "15px", fontWeight: 700, color: textColor, cursor: "pointer", textDecoration: "none" }}
+                        style={{ fontSize: "0.9375rem", fontWeight: 700, color: textColor, cursor: "pointer", textDecoration: "none" }}
                       >
                         {job.name}
                       </a>
                       {job.isHighlight && (
                         <span style={{
-                          padding: "1px 8px", borderRadius: "4px", fontSize: "10px",
+                          padding: "1px 8px", borderRadius: "4px", fontSize: "0.625rem",
                           fontWeight: 700, background: "#FEF2F2", color: "#EF4444",
                           border: "1px solid #FECACA",
                         }}>🔥 HOT</span>
@@ -444,12 +444,12 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                     </div>
 
                     {job.company?.name && (
-                      <div style={{ fontSize: "13px", color: textColor, opacity: 0.6, marginBottom: "6px" }}>
+                      <div style={{ fontSize: "0.8125rem", color: textColor, opacity: 0.6, marginBottom: "6px" }}>
                         {job.company.name}
                       </div>
                     )}
 
-                    <div style={{ fontSize: "12px", color: textColor, opacity: 0.5, marginBottom: "8px", display: "flex", gap: "12px", flexWrap: "wrap" }}>
+                    <div style={{ fontSize: "0.75rem", color: textColor, opacity: 0.5, marginBottom: "8px", display: "flex", gap: "12px", flexWrap: "wrap" }}>
                       {formatLocation(job) && <span>{formatLocation(job)}</span>}
                       {job.experienceTime !== undefined && job.experienceTime !== null && (
                         <span>{job.experienceTime} years</span>
@@ -461,7 +461,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                     <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
                       {job.skills?.map((skill) => (
                         <span key={skill.name} style={{
-                          padding: "2px 10px", borderRadius: "4px", fontSize: "11px",
+                          padding: "2px 10px", borderRadius: "4px", fontSize: "0.6875rem",
                           fontWeight: 500, background: `${primaryColor}08`, color: primaryColor,
                           border: `1px solid ${primaryColor}20`,
                         }}>{skill.name}</span>
@@ -469,7 +469,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                     </div>
 
                     {job.uploadTime && (
-                      <div style={{ fontSize: "11px", color: textColor, opacity: 0.35, marginTop: "8px" }}>
+                      <div style={{ fontSize: "0.6875rem", color: textColor, opacity: 0.35, marginTop: "8px" }}>
                         Posted {new Date(job.uploadTime).toLocaleDateString()}
                       </div>
                     )}
@@ -477,13 +477,13 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
 
                   {/* Salary */}
                   <div style={{ textAlign: "right", flexShrink: 0 }}>
-                    <div style={{ fontSize: "14px", fontWeight: 700, color: primaryColor, whiteSpace: "nowrap" }}>
+                    <div style={{ fontSize: "0.875rem", fontWeight: 700, color: primaryColor, whiteSpace: "nowrap" }}>
                       {formatSalary(job.salaryStart, job.salaryEnd)}
                     </div>
                     <button
                       onClick={() => handleViewDetail(job)}
                       style={{
-                        marginTop: "8px", padding: "6px 16px", fontSize: "12px",
+                        marginTop: "8px", padding: "6px 16px", fontSize: "0.75rem",
                         borderRadius: `${borderRadius}px`, fontWeight: 600,
                         cursor: "pointer", transition: "all 0.2s",
                         background: "transparent", color: primaryColor,
@@ -495,14 +495,14 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                       onClick={() => handleApplyClick(job)}
                       style={{
                         ...(btnStyles[buttonStyle] || btnStyles.flat),
-                        marginTop: "6px", padding: "6px 16px", fontSize: "12px",
+                        marginTop: "6px", padding: "6px 16px", fontSize: "0.75rem",
                         display: "block", width: "140px", marginLeft: "auto", textAlign: "center",
                       }}
                     >Apply Now</button>
                   </div>
                 </div>
               )) : (
-                <div style={{ textAlign: "center", padding: "48px 20px", color: textColor, opacity: 0.4, fontSize: "14px" }}>
+                <div style={{ textAlign: "center", padding: "48px 20px", color: textColor, opacity: 0.4, fontSize: "0.875rem" }}>
                   No matching jobs found.
                 </div>
               )}
@@ -520,7 +520,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                   border: "1px solid #e5e7eb", background: "#fff",
                   cursor: currentPage === 1 ? "default" : "pointer",
                   opacity: currentPage === 1 ? 0.3 : 1,
-                  fontSize: "14px", color: textColor, display: "flex",
+                  fontSize: "0.875rem", color: textColor, display: "flex",
                   alignItems: "center", justifyContent: "center",
                 }}
               >‹</button>
@@ -531,7 +531,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                   border: page === currentPage ? "none" : "1px solid #e5e7eb",
                   background: page === currentPage ? primaryColor : "#fff",
                   color: page === currentPage ? "#fff" : textColor,
-                  fontSize: "13px", fontWeight: 600, cursor: "pointer",
+                  fontSize: "0.8125rem", fontWeight: 600, cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>{page}</button>
               ))}
@@ -544,7 +544,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                   border: "1px solid #e5e7eb", background: "#fff",
                   cursor: currentPage === totalPages ? "default" : "pointer",
                   opacity: currentPage === totalPages ? 0.3 : 1,
-                  fontSize: "14px", color: textColor, display: "flex",
+                  fontSize: "0.875rem", color: textColor, display: "flex",
                   alignItems: "center", justifyContent: "center",
                 }}
               >›</button>

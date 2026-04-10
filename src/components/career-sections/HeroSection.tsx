@@ -29,7 +29,7 @@ export default function HeroSection({ theme, sectionProps = {}, settings = {} }:
   const btnBase: React.CSSProperties = {
     padding: '14px 32px',
     borderRadius: `${borderRadius}px`,
-    fontSize: '16px',
+    fontSize: '1rem',
     fontWeight: 600,
     cursor: 'pointer',
     transition: 'all 0.2s',
@@ -110,14 +110,14 @@ export default function HeroSection({ theme, sectionProps = {}, settings = {} }:
 
       <div style={{ position: 'relative', zIndex: 1, maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
         <h1 style={{
-          fontSize: 'clamp(32px, 5vw, 50px)', fontWeight: 800, color: settings.textColorOverride || '#fff',
+          fontSize: '3.125rem', fontWeight: 800, color: settings.textColorOverride || '#fff',
           lineHeight: 1.2, marginBottom: '20px', letterSpacing: '-0.5px', whiteSpace: 'nowrap',
         }}>
           {headline}
         </h1>
 
         <p style={{
-          fontSize: '18px', color: settings.textColorOverride || 'rgba(255,255,255,0.85)',
+          fontSize: '1.125rem', color: settings.textColorOverride || 'rgba(255,255,255,0.85)',
           maxWidth: '560px', margin: '0 auto 40px', lineHeight: 1.7,
           opacity: 0.8,
         }}>

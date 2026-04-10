@@ -33,7 +33,7 @@ export default function AwardsSection({ theme, sectionProps = {}, settings = {} 
       padding: `${settings.paddingTop || 64}px 40px ${settings.paddingBottom || 64}px`,
       textAlign: (settings.textAlign as React.CSSProperties['textAlign']) || 'center',
     }}>
-      <h2 style={{ fontSize: '32px', fontWeight: 700, color: textColor, marginBottom: '40px' }}>
+      <h2 style={{ fontSize: '2rem', fontWeight: 700, color: textColor, marginBottom: '40px' }}>
         {headline}
       </h2>
 
@@ -55,15 +55,15 @@ export default function AwardsSection({ theme, sectionProps = {}, settings = {} 
               width: 88, height: 88, borderRadius: `${borderRadius}px`,
               background: item.imgUrl ? `url(${item.imgUrl}) center/contain no-repeat` : secondaryColor || `${primaryColor}10`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '28px',
+              fontSize: '1.75rem',
             }}>
               {!item.imgUrl && '🏆'}
             </div>
-            <div style={{ fontSize: '17px', fontWeight: 700, color: textColor, textAlign: 'center' }}>
+            <div style={{ fontSize: '1.0625rem', fontWeight: 700, color: textColor, textAlign: 'center' }}>
               {item.name}
             </div>
             <div style={{
-              fontSize: '13px', fontWeight: 600, color: primaryColor,
+              fontSize: '0.8125rem', fontWeight: 600, color: primaryColor,
               background: secondaryColor || `${primaryColor}10`, padding: '3px 10px', borderRadius: '20px',
             }}>
               {item.year}

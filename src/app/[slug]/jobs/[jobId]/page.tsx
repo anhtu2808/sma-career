@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getCareerPageBySlug, fetchJobDetail } from "@/lib/api";
-import type { FlatTheme } from "@/types/career-page";
+import type { FlatTheme, ThemeConfig } from "@/types/career-page";
 import HeaderSection from "@/components/career-sections/HeaderSection";
 import FooterSection from "@/components/career-sections/FooterSection";
 import JobDetailView from "@/views/JobDetail";
@@ -12,22 +12,18 @@ interface JobPageProps {
 }
 
 /** Flatten themeConfig from BE structure into a single flat object */
-function flattenTheme(tc: {
-  colors: { primary: string; secondary: string; background: string; text: string };
-  typography: { fontFamily: string; baseFontSize: number };
-  styling: { borderRadius: number; buttonStyle: string };
-}): FlatTheme {
+function flattenTheme(tc: ThemeConfig): FlatTheme {
   return {
-    primaryColor: tc.colors.primary,
-    secondaryColor: tc.colors.secondary,
-    backgroundColor: tc.colors.background,
-    textColor: tc.colors.text,
-    fontFamily: tc.typography.fontFamily,
-    baseFontSize: tc.typography.baseFontSize,
-    borderRadius: tc.styling.borderRadius,
-    buttonStyle: tc.styling.buttonStyle,
-    shadow: "subtle",
-    spacing: "normal",
+    primaryColor: tc.colors?.primary || "#0f172a",
+    secondaryColor: tc.colors?.secondary || "#f8fafc",
+    backgroundColor: tc.colors?.background || "#ffffff",
+    textColor: tc.colors?.text || "#0f172a",
+    fontFamily: tc.typography?.fontFamily || "Inter",
+    baseFontSize: tc.typography?.baseFontSize || 16,
+    borderRadius: tc.styling?.borderRadius || 8,
+    buttonStyle: tc.styling?.buttonStyle || "solid",
+    shadow: tc.effects?.shadow || "subtle",
+    spacing: tc.effects?.spacing || "normal",
   };
 }
 
@@ -75,18 +71,30 @@ export default async function JobDetailPage({ params }: JobPageProps) {
   const showFooter = pageData.footerConfig._visible !== false;
   const companyName = (pageData.headerConfig.companyName as string) || (pageData.footerConfig.companyName as string) || 'Company';
 
+  // dynamically load google font if it's not Inter
+  const fontUrl = theme.fontFamily && theme.fontFamily !== "Inter" 
+    ? `https://fonts.googleapis.com/css2?family=${theme.fontFamily.replace(/\s+/g, '+')}:wght@300;400;500;600;700;800&display=swap`
+    : null;
+
   return (
-    <div
-      style={{
-        fontFamily: `'${theme.fontFamily || "Inter"}', sans-serif`,
-        fontSize: `${theme.baseFontSize}px`,
-        color: theme.textColor,
-        background: theme.backgroundColor,
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          ${fontUrl ? `@import url('${fontUrl}');` : ''}
+          :root { font-size: ${theme.baseFontSize}px; }
+        `
+      }} />
+      <div
+        style={{
+          fontFamily: `'${theme.fontFamily || "Inter"}', sans-serif`,
+          fontSize: `${theme.baseFontSize}px`,
+          color: theme.textColor,
+          background: theme.backgroundColor,
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
       {/* Header */}
       {showHeader && (
         <HeaderSection
@@ -105,5 +113,6 @@ export default async function JobDetailPage({ params }: JobPageProps) {
       {/* Footer */}
       {showFooter && <FooterSection theme={theme} footerConfig={pageData.footerConfig} />}
     </div>
+    </>
   );
 }

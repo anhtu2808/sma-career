@@ -34,18 +34,18 @@ export default function JobDetailMetaChips({ jobDetail, primaryColor }: JobDetai
   return (
     <div style={{
       padding: "20px 32px", display: "flex", flexWrap: "wrap", gap: 12,
-      borderBottom: "1px solid #f0f0f0", fontSize: 14, color: "#374151",
+      borderBottom: "1px solid #f0f0f0", fontSize: '0.875rem', color: "#374151",
       background: "#fafafa"
     }}>
       {jobDetail.locations && jobDetail.locations.length > 0 && (
         <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <FontAwesomeIcon icon={faLocationDot} style={{ color: primaryColor, fontSize: 14 }} />
+          <FontAwesomeIcon icon={faLocationDot} style={{ color: primaryColor, fontSize: '0.875rem' }} />
           {jobDetail.locations.map(l => l.city || l.name).filter(Boolean).join(", ")}
         </span>
       )}
       {(jobDetail.salaryStart || jobDetail.salaryEnd) && (
         <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <FontAwesomeIcon icon={faMoneyBillWave} style={{ color: primaryColor, fontSize: 14 }} />
+          <FontAwesomeIcon icon={faMoneyBillWave} style={{ color: primaryColor, fontSize: '0.875rem' }} />
           <span style={{ fontWeight: 700, color: primaryColor }}>
             {formatSalary(jobDetail.salaryStart, jobDetail.salaryEnd)}
           </span>
@@ -53,25 +53,25 @@ export default function JobDetailMetaChips({ jobDetail, primaryColor }: JobDetai
       )}
       {jobDetail.experienceTime !== undefined && jobDetail.experienceTime !== null && (
         <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <FontAwesomeIcon icon={faClock} style={{ color: primaryColor, fontSize: 14 }} />
+          <FontAwesomeIcon icon={faClock} style={{ color: primaryColor, fontSize: '0.875rem' }} />
           {jobDetail.experienceTime} years exp
         </span>
       )}
       {jobDetail.jobLevel && (
         <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <FontAwesomeIcon icon={faBullseye} style={{ color: primaryColor, fontSize: 14 }} />
+          <FontAwesomeIcon icon={faBullseye} style={{ color: primaryColor, fontSize: '0.875rem' }} />
           {JOB_LEVEL_MAP[jobDetail.jobLevel] || jobDetail.jobLevel}
         </span>
       )}
       {jobDetail.workingModel && (
         <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <FontAwesomeIcon icon={faBuilding} style={{ color: primaryColor, fontSize: 14 }} />
+          <FontAwesomeIcon icon={faBuilding} style={{ color: primaryColor, fontSize: '0.875rem' }} />
           {WORKING_MODEL_MAP[jobDetail.workingModel] || jobDetail.workingModel}
         </span>
       )}
       {jobDetail.expDate && (
         <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <FontAwesomeIcon icon={faCalendarDays} style={{ color: primaryColor, fontSize: 14 }} />
+          <FontAwesomeIcon icon={faCalendarDays} style={{ color: primaryColor, fontSize: '0.875rem' }} />
           Deadline: {new Date(jobDetail.expDate).toLocaleDateString()}
         </span>
       )}

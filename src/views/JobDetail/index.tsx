@@ -25,7 +25,7 @@ export default function JobDetailView({ slug, jobDetail, theme }: JobDetailViewP
 
   if (!jobDetail) {
     return (
-      <div style={{ padding: "100px 0", textAlign: "center", color: "#9ca3af", fontSize: 16 }}>
+      <div style={{ padding: "100px 0", textAlign: "center", color: "#9ca3af", fontSize: '1rem' }}>
         Could not load job details. The job might have been closed or removed.
         <div style={{ marginTop: 20 }}>
           <Link href={buildPath(slug)} style={{ color: primaryColor, textDecoration: "none", fontWeight: 600 }}>
@@ -80,7 +80,7 @@ export default function JobDetailView({ slug, jobDetail, theme }: JobDetailViewP
                style={{
                  width: "100%", display: "block", textAlign: "center",
                  padding: "14px 32px", borderRadius: `${borderRadius}px`,
-                 background: primaryColor, color: "#fff", fontSize: 16, fontWeight: 700,
+                 background: primaryColor, color: "#fff", fontSize: '1rem', fontWeight: 700,
                  border: "none", cursor: "pointer", transition: "all 0.2s",
                  boxShadow: `0 4px 12px ${primaryColor}30`,
                }}

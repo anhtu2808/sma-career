@@ -137,7 +137,7 @@ export default function ApplyJobModal({ isOpen, onClose, job, primaryColor }: Ap
         </Form.Item>
 
         {isFetchingQuestions ? (
-          <div style={{ padding: "16px 0", textAlign: "center", color: "#6b7280", fontSize: 13 }}>Loading job questions...</div>
+          <div style={{ padding: "16px 0", textAlign: "center", color: "#6b7280", fontSize: '0.8125rem' }}>Loading job questions...</div>
         ) : (
           jobQuestions.map((q) => (
             <Form.Item
@@ -164,7 +164,7 @@ export default function ApplyJobModal({ isOpen, onClose, job, primaryColor }: Ap
                 onMouseOver={(e) => (e.currentTarget.style.borderColor = primaryColor)}
                 onMouseOut={(e) => (e.currentTarget.style.borderColor = "#cbd5e1")}
               >
-                <span style={{ fontWeight: 600, fontSize: 14 }}>Upload CV (PDF, DOC)</span>
+                <span style={{ fontWeight: 600, fontSize: '0.875rem' }}>Upload CV (PDF, DOC)</span>
               </div>
             ) : (
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
@@ -177,8 +177,8 @@ export default function ApplyJobModal({ isOpen, onClose, job, primaryColor }: Ap
                   onMouseOver={(e) => (e.currentTarget.style.borderColor = primaryColor)}
                   onMouseOut={(e) => (e.currentTarget.style.borderColor = "#cbd5e1")}
                 >
-                  <span style={{ fontSize: 16, color: "#64748b" }}>↑</span>
-                  <span style={{ fontWeight: 600, fontSize: 13 }}>Upload another CV (PDF, DOC)</span>
+                  <span style={{ fontSize: '1rem', color: "#64748b" }}>↑</span>
+                  <span style={{ fontWeight: 600, fontSize: '0.8125rem' }}>Upload another CV (PDF, DOC)</span>
                 </div>
                 <div style={{
                   width: "100%", padding: "14px 20px", border: "1px solid #f97316",
@@ -188,10 +188,10 @@ export default function ApplyJobModal({ isOpen, onClose, job, primaryColor }: Ap
                 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
                     <div style={{ textAlign: "left" }}>
-                      <div style={{ fontWeight: 700, fontSize: 14, color: "#1f2937", marginBottom: 2, wordBreak: "break-all" }}>
+                      <div style={{ fontWeight: 700, fontSize: '0.875rem', color: "#1f2937", marginBottom: 2, wordBreak: "break-all" }}>
                         {selectedFile.name}
                       </div>
-                      <div style={{ fontSize: 12, color: "#6b7280" }}>
+                      <div style={{ fontSize: '0.75rem', color: "#6b7280" }}>
                         {new Date().toLocaleDateString("vi-VN")}
                       </div>
                     </div>
@@ -199,7 +199,7 @@ export default function ApplyJobModal({ isOpen, onClose, job, primaryColor }: Ap
                   <div style={{
                     width: 24, height: 24, borderRadius: "50%", border: "2px solid #f97316",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    color: "#f97316", fontSize: 12, fontWeight: 700, flexShrink: 0
+                    color: "#f97316", fontSize: '0.75rem', fontWeight: 700, flexShrink: 0
                   }}>
                     ✓
                   </div>

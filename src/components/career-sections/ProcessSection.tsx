@@ -30,7 +30,7 @@ export default function ProcessSection({ theme, sectionProps = {}, settings = {}
       padding: `${settings.paddingTop || 64}px 40px ${settings.paddingBottom || 64}px`,
       textAlign: (settings.textAlign as React.CSSProperties['textAlign']) || 'center',
     }}>
-      <h2 style={{ fontSize: '32px', fontWeight: 700, color: textColor, marginBottom: '48px' }}>
+      <h2 style={{ fontSize: '2rem', fontWeight: 700, color: textColor, marginBottom: '48px' }}>
         {headline}
       </h2>
 
@@ -44,7 +44,7 @@ export default function ProcessSection({ theme, sectionProps = {}, settings = {}
               width: 60, height: 60, borderRadius: '50%',
               background: primaryColor, color: '#fff',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontWeight: 800, fontSize: '18px', margin: '0 auto 20px',
+              fontWeight: 800, fontSize: '1.125rem', margin: '0 auto 20px',
             }}>
               {String(i + 1).padStart(2, '0')}
             </div>
@@ -54,10 +54,10 @@ export default function ProcessSection({ theme, sectionProps = {}, settings = {}
                 height: '2px', background: secondaryColor || `${primaryColor}30`,
               }} />
             )}
-            <div style={{ fontSize: '17px', fontWeight: 700, color: textColor, marginBottom: '8px' }}>
+            <div style={{ fontSize: '1.0625rem', fontWeight: 700, color: textColor, marginBottom: '8px' }}>
               {step.title}
             </div>
-            <div style={{ fontSize: '14px', color: textColor, opacity: 0.55, lineHeight: 1.6 }}>
+            <div style={{ fontSize: '0.875rem', color: textColor, opacity: 0.55, lineHeight: 1.6 }}>
               {step.desc}
             </div>
           </div>

@@ -32,7 +32,7 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
       padding: `${settings.paddingTop || 64}px 40px ${settings.paddingBottom || 64}px`,
       textAlign: 'center',
     }}>
-      <h2 style={{ fontSize: '32px', fontWeight: 700, color: textColor, marginBottom: '40px' }}>
+      <h2 style={{ fontSize: '2rem', fontWeight: 700, color: textColor, marginBottom: '40px' }}>
         {headline}
       </h2>
 
@@ -60,11 +60,11 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
                   textAlign: 'left',
                 }}
               >
-                <span style={{ fontSize: '14px', fontWeight: 600, color: textColor }}>
+                <span style={{ fontSize: '0.875rem', fontWeight: 600, color: textColor }}>
                   {item.question}
                 </span>
                 <span style={{
-                  fontSize: '18px', color: primaryColor, fontWeight: 700,
+                  fontSize: '1.125rem', color: primaryColor, fontWeight: 700,
                   transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
                   transition: 'transform 0.2s',
                   flexShrink: 0, marginLeft: '12px',
@@ -75,7 +75,7 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
               {isOpen && (
                 <div style={{
                   padding: '0 20px 16px',
-                  fontSize: '13px', color: textColor, opacity: 0.65, lineHeight: 1.7,
+                  fontSize: '0.8125rem', color: textColor, opacity: 0.65, lineHeight: 1.7,
                 }}>
                   {item.answer}
                 </div>

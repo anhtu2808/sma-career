@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getCareerPageBySlug } from "@/lib/api";
-import type { FlatTheme } from "@/types/career-page";
+import type { FlatTheme, ThemeConfig } from "@/types/career-page";
 import CareerPageRenderer from "@/components/career-sections/CareerPageRenderer";
 import "@/styles/career-page.css";
 
@@ -10,22 +10,18 @@ interface PageProps {
 }
 
 /** Flatten themeConfig from BE structure into a single flat object */
-function flattenTheme(tc: {
-  colors: { primary: string; secondary: string; background: string; text: string };
-  typography: { fontFamily: string; baseFontSize: number };
-  styling: { borderRadius: number; buttonStyle: string };
-}): FlatTheme {
+function flattenTheme(tc: ThemeConfig): FlatTheme {
   return {
-    primaryColor: tc.colors.primary,
-    secondaryColor: tc.colors.secondary,
-    backgroundColor: tc.colors.background,
-    textColor: tc.colors.text,
-    fontFamily: tc.typography.fontFamily,
-    baseFontSize: tc.typography.baseFontSize,
-    borderRadius: tc.styling.borderRadius,
-    buttonStyle: tc.styling.buttonStyle,
-    shadow: "subtle",
-    spacing: "normal",
+    primaryColor: tc.colors?.primary || "#0f172a",
+    secondaryColor: tc.colors?.secondary || "#f8fafc",
+    backgroundColor: tc.colors?.background || "#ffffff",
+    textColor: tc.colors?.text || "#0f172a",
+    fontFamily: tc.typography?.fontFamily || "Inter",
+    baseFontSize: tc.typography?.baseFontSize || 16,
+    borderRadius: tc.styling?.borderRadius || 8,
+    buttonStyle: tc.styling?.buttonStyle || "solid",
+    shadow: tc.effects?.shadow || "subtle",
+    spacing: tc.effects?.spacing || "normal",
   };
 }
 

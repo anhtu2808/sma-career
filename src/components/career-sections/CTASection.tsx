@@ -32,7 +32,7 @@ export default function CTASection({ theme, sectionProps = {}, settings = {} }: 
       }} />
 
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <h2 style={{ fontSize: '32px', fontWeight: 800, color: '#fff', marginBottom: '12px' }}>
+        <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', marginBottom: '12px' }}>
           {headline}
         </h2>
         {ctaText && (
@@ -42,7 +42,7 @@ export default function CTASection({ theme, sectionProps = {}, settings = {} }: 
             background: secondaryColor || '#fff',
             color: primaryColor,
             border: 'none',
-            fontSize: '16px',
+            fontSize: '1rem',
             fontWeight: 700,
             cursor: 'pointer',
             boxShadow: buttonStyle === 'shadow' ? '0 8px 24px rgba(0,0,0,0.25)' : 'none',

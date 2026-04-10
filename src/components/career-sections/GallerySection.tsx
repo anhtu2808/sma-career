@@ -18,7 +18,7 @@ export default function GallerySection({ theme, sectionProps = {}, settings = {}
       padding: `${settings.paddingTop || 64}px 40px ${settings.paddingBottom || 64}px`,
       textAlign: 'center',
     }}>
-      <h2 style={{ fontSize: '32px', fontWeight: 700, color: textColor, marginBottom: '40px' }}>
+      <h2 style={{ fontSize: '2rem', fontWeight: 700, color: textColor, marginBottom: '40px' }}>
         {headline}
       </h2>
 
@@ -40,7 +40,7 @@ export default function GallerySection({ theme, sectionProps = {}, settings = {}
                   ? `url(${item}) center/cover no-repeat`
                   : `linear-gradient(${135 + i * 20}deg, ${primaryColor}15, ${primaryColor}08)`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '32px', color: `${primaryColor}40`,
+                fontSize: '2rem', color: `${primaryColor}40`,
                 border: '1px solid rgba(0,0,0,0.04)',
               }}
             >

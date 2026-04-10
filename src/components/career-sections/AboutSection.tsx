@@ -50,12 +50,12 @@ export default function AboutSection({ theme, sectionProps = {}, settings = {} }
         )}
 
         <div style={{ textAlign: imageUrl ? 'left' : 'center', flex: 1 }}>
-          <h2 style={{ fontSize: '32px', fontWeight: 700, color: textColor, marginBottom: '16px' }}>
+          <h2 style={{ fontSize: '2rem', fontWeight: 700, color: textColor, marginBottom: '16px' }}>
             {headline}
           </h2>
           <div
             style={{
-              fontSize: '15px', color: textColor, opacity: 0.65,
+              fontSize: '0.9375rem', color: textColor, opacity: 0.65,
               lineHeight: 1.8, maxWidth: imageUrl ? 'none' : '600px',
               margin: imageUrl ? 0 : '0 auto',
             }}
