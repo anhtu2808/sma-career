@@ -34,9 +34,9 @@ export default function ProcessSection({ theme, sectionProps = {}, settings = {}
         {headline}
       </h2>
 
-      <div style={{
+      <div className="career-container" style={{
         display: 'grid', gridTemplateColumns: `repeat(${Math.min(visibleSteps.length, 4)}, 1fr)`,
-        gap: '32px', maxWidth: '1280px', margin: '0 auto', position: 'relative',
+        gap: '32px', margin: '0 auto', position: 'relative',
       }}>
         {visibleSteps.map((step, i) => (
           <div key={i} style={{ textAlign: 'center', position: 'relative' }}>

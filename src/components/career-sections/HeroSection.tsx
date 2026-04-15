@@ -108,7 +108,7 @@ export default function HeroSection({ theme, sectionProps = {}, settings = {} }:
         zIndex: 0,
       }} />
 
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
+      <div className="career-container" style={{ position: 'relative', zIndex: 1, margin: '0 auto', width: '100%' }}>
         <h1 style={{
           fontSize: '3.125rem', fontWeight: 800, color: settings.textColorOverride || '#fff',
           lineHeight: 1.2, marginBottom: '20px', letterSpacing: '-0.5px', whiteSpace: 'nowrap',

@@ -45,9 +45,9 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
       padding: `${settings.paddingTop || 64}px 40px ${settings.paddingBottom || 64}px`,
       textAlign: 'center',
     }}>
-      <div style={{
+      <div className="career-container" style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-        maxWidth: '1280px', margin: '0 auto 40px',
+        margin: '0 auto 40px',
       }}>
         <h2 style={{ fontSize: '2rem', fontWeight: 700, color: textColor, margin: 0 }}>
           {headline}
@@ -76,9 +76,9 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
         )}
       </div>
 
-      <div style={{
+      <div className="career-container" style={{
         display: 'grid', gridTemplateColumns: `repeat(${Math.min(visibleNews.length, 3)}, 1fr)`,
-        gap: '28px', maxWidth: '1280px', margin: '0 auto',
+        gap: '28px', margin: '0 auto',
       }}>
         {visibleNews.map((item, i) => {
           const cardContent = (

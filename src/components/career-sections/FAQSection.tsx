@@ -36,7 +36,7 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
         {headline}
       </h2>
 
-      <div style={{ maxWidth: '1080px', margin: '0 auto', textAlign: 'left' }}>
+      <div className="career-container" style={{ margin: '0 auto', textAlign: 'left' }}>
         {items.filter(item => item.isVisible !== false).map((item, i) => {
           const isOpen = openIndex === i;
           return (

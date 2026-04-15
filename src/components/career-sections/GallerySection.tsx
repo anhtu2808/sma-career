@@ -22,9 +22,9 @@ export default function GallerySection({ theme, sectionProps = {}, settings = {}
         {headline}
       </h2>
 
-      <div style={{
+      <div className="career-container" style={{
         display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '12px', maxWidth: '1280px', margin: '0 auto',
+        gap: '12px', margin: '0 auto',
       }}>
         {placeholders.map((item, i) => {
           const isUrl = typeof item === 'string' && item.startsWith('http');
