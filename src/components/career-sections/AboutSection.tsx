@@ -30,9 +30,9 @@ export default function AboutSection({ theme, sectionProps = {}, settings = {} }
       padding: `${settings.paddingTop || 64}px 40px ${settings.paddingBottom || 64}px`,
       textAlign: (settings.textAlign as React.CSSProperties['textAlign']) || 'center',
     }}>
-      <div style={{
+      <div className="career-container" style={{
         display: 'flex', gap: '40px', alignItems: 'center',
-        maxWidth: '1280px', margin: '0 auto',
+        margin: '0 auto',
         flexDirection: imageUrl ? 'row' : 'column',
       }}>
         {imageUrl && (

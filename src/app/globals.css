@@ -38,3 +38,14 @@ a {
 button {
   font-family: inherit;
 }
+
+/* Responsive container for career pages */
+.career-container {
+  width: 100%;
+  max-width: 1440px;
+}
+@media (max-width: 1439px) { /* Laptops and smaller */
+  .career-container {
+    max-width: 1280px;
+  }
+}

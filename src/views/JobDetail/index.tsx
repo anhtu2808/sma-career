@@ -29,7 +29,7 @@ export default function JobDetailView({ slug, jobDetail, theme }: JobDetailViewP
         Could not load job details. The job might have been closed or removed.
         <div style={{ marginTop: 20 }}>
           <Link href={buildPath(slug)} style={{ color: primaryColor, textDecoration: "none", fontWeight: 600 }}>
-             ← Return to Career Page
+            ← Return to Career Page
           </Link>
         </div>
       </div>
@@ -40,7 +40,7 @@ export default function JobDetailView({ slug, jobDetail, theme }: JobDetailViewP
     setApplyModalOpen(true);
   };
 
-  const fontUrl = theme.fontFamily && theme.fontFamily !== "Inter" 
+  const fontUrl = theme.fontFamily && theme.fontFamily !== "Inter"
     ? `https://fonts.googleapis.com/css2?family=${theme.fontFamily.replace(/\s+/g, '+')}:wght@300;400;500;600;700;800&display=swap`
     : null;
 
@@ -52,58 +52,57 @@ export default function JobDetailView({ slug, jobDetail, theme }: JobDetailViewP
         }} />
       )}
       <ConfigProvider theme={{ token: { colorPrimary: primaryColor, borderRadius } }}>
-        <div style={{ 
-          maxWidth: 1200, 
-          margin: "0 auto", 
-          padding: "40px 20px", 
+        <div className="career-container" style={{
+          margin: "0 auto",
+          padding: "40px 20px",
           fontFamily: `'${theme.fontFamily || "Inter"}', sans-serif`,
           color: textColor
         }}>
           {/* Main Card */}
-        <div style={{ 
-          background: "#fff", 
-          borderRadius: `${borderRadius}px`, 
-          border: "1px solid #e5e7eb",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
-          overflow: "hidden"
-        }}>
-          <JobDetailHeader jobDetail={jobDetail} textColor={textColor} />
-          
-          <JobDetailMetaChips jobDetail={jobDetail} primaryColor={primaryColor} />
-          
-          <JobDetailSkillTags jobDetail={jobDetail} primaryColor={primaryColor} />
+          <div style={{
+            background: "#fff",
+            borderRadius: `${borderRadius}px`,
+            border: "1px solid #e5e7eb",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
+            overflow: "hidden"
+          }}>
+            <JobDetailHeader jobDetail={jobDetail} textColor={textColor} />
 
-          {/* Main Apply Button */}
-          <div style={{ padding: "24px 32px 0" }}>
-             <button
-               onClick={handleApplyClick}
-               style={{
-                 width: "100%", display: "block", textAlign: "center",
-                 padding: "14px 32px", borderRadius: `${borderRadius}px`,
-                 background: primaryColor, color: "#fff", fontSize: '1rem', fontWeight: 700,
-                 border: "none", cursor: "pointer", transition: "all 0.2s",
-                 boxShadow: `0 4px 12px ${primaryColor}30`,
-               }}
-             >
-               Apply Now ↗
-             </button>
+            <JobDetailMetaChips jobDetail={jobDetail} primaryColor={primaryColor} />
+
+            <JobDetailSkillTags jobDetail={jobDetail} primaryColor={primaryColor} />
+
+            {/* Main Apply Button */}
+            <div style={{ padding: "24px 32px 0" }}>
+              <button
+                onClick={handleApplyClick}
+                style={{
+                  width: "100%", display: "block", textAlign: "center",
+                  padding: "14px 32px", borderRadius: `${borderRadius}px`,
+                  background: primaryColor, color: "#fff", fontSize: '1rem', fontWeight: 700,
+                  border: "none", cursor: "pointer", transition: "all 0.2s",
+                  boxShadow: `0 4px 12px ${primaryColor}30`,
+                }}
+              >
+                Apply Now ↗
+              </button>
+            </div>
+
+            <JobDetailContent
+              jobDetail={jobDetail}
+              textColor={textColor}
+              primaryColor={primaryColor}
+              borderRadius={borderRadius}
+            />
           </div>
-
-          <JobDetailContent 
-            jobDetail={jobDetail} 
-            textColor={textColor} 
-            primaryColor={primaryColor} 
-            borderRadius={borderRadius} 
-          />
         </div>
-      </div>
 
-      <ApplyJobModal 
-        isOpen={applyModalOpen}
-        onClose={() => setApplyModalOpen(false)}
-        job={jobDetail as JobApiItem}
-        primaryColor={primaryColor}
-      />
+        <ApplyJobModal
+          isOpen={applyModalOpen}
+          onClose={() => setApplyModalOpen(false)}
+          job={jobDetail as JobApiItem}
+          primaryColor={primaryColor}
+        />
       </ConfigProvider>
     </>
   );

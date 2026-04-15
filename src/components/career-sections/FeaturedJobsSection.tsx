@@ -55,9 +55,9 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
   const [selectedSkills, setSelectedSkills] = useState<number[]>([]);
   const [selectedExpertises, setSelectedExpertises] = useState<number[]>([]);
   const [selectedDomains, setSelectedDomains] = useState<number[]>([]);
-  const [skillOptions, setSkillOptions] = useState<{label: string, value: number}[]>([]);
-  const [expertiseOptions, setExpertiseOptions] = useState<{label: string, value: number}[]>([]);
-  const [domainOptions, setDomainOptions] = useState<{label: string, value: number}[]>([]);
+  const [skillOptions, setSkillOptions] = useState<{ label: string, value: number }[]>([]);
+  const [expertiseOptions, setExpertiseOptions] = useState<{ label: string, value: number }[]>([]);
+  const [domainOptions, setDomainOptions] = useState<{ label: string, value: number }[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   // ─── Data state ──────────────────────────────────────────
@@ -160,9 +160,9 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
 
   useEffect(() => {
     loadJobs();
-    fetchSkills().then(res => setSkillOptions(res.map(s => ({label: s.name, value: s.id}))));
-    fetchExpertises().then(res => setExpertiseOptions(res.map(e => ({label: e.name, value: e.id}))));
-    fetchDomains().then(res => setDomainOptions(res.map(d => ({label: d.name, value: d.id}))));
+    fetchSkills().then(res => setSkillOptions(res.map(s => ({ label: s.name, value: s.id }))));
+    fetchExpertises().then(res => setExpertiseOptions(res.map(e => ({ label: e.name, value: e.id }))));
+    fetchDomains().then(res => setDomainOptions(res.map(d => ({ label: d.name, value: d.id }))));
   }, [loadJobs]);
 
   // ─── Handlers ────────────────────────────────────────────
@@ -223,344 +223,344 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
       }
     }}>
       <section id="jobs-section" style={{
-      background: settings.backgroundColorOverride || backgroundColor,
-      padding: `${settings.paddingTop || 64}px 40px ${settings.paddingBottom || 64}px`,
-    }}>
-      <div style={{ textAlign: "center", marginBottom: "36px" }}>
-        <h2 style={{ fontSize: "2rem", fontWeight: 700, color: textColor, marginBottom: "8px" }}>{headline}</h2>
-      </div>
-
-      <div style={{ display: "flex", gap: "28px", maxWidth: "1280px", margin: "0 auto", alignItems: "flex-start" }}>
-        {/* ─── Filter Sidebar ──────────────────────────────────── */}
-        <div style={{
-          width: "280px", flexShrink: 0,
-          background: "#fff", borderRadius: `${borderRadius}px`,
-          border: "1px solid #f0f0f0", boxShadow: shadowMap[shadow],
-          padding: "24px 20px",
-        }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <span style={{ color: primaryColor, fontSize: "1rem" }}>▼</span>
-              <span style={{ fontSize: "1.125rem", fontWeight: 800, color: textColor }}>Filters</span>
-            </div>
-            <button onClick={handleReset} style={{
-              background: "none", border: "none", color: primaryColor,
-              fontSize: "0.8125rem", fontWeight: 600, cursor: "pointer",
-            }}>Reset</button>
-          </div>
-
-          {/* Location */}
-          <div style={fieldGap}>
-            <label style={labelStyle}>Location</label>
-            <input style={inputStyle} placeholder="Enter Location" value={searchLocation}
-              onChange={(e) => { setSearchLocation(e.target.value); setCurrentPage(1); }} />
-          </div>
-
-          {/* Job Level */}
-          <div style={fieldGap}>
-            <label style={labelStyle}>Job Level</label>
-            <Select
-              showSearch
-              allowClear
-              options={jobLevelOptions}
-              value={selectedLevel || undefined}
-              onChange={(val) => { setSelectedLevel(val ?? ""); setCurrentPage(1); }}
-              placeholder="Select Job Level"
-              style={{ width: "100%" }}
-              filterOption={(input, option) => (option?.label as string ?? '').toLowerCase().includes(input.toLowerCase())}
-            />
-          </div>
-
-          {/* Working Model */}
-          <div style={fieldGap}>
-            <label style={labelStyle}>Working Model</label>
-            <Select
-              showSearch
-              allowClear
-              options={workingModelOptions}
-              value={selectedModel || undefined}
-              onChange={(val) => { setSelectedModel(val ?? ""); setCurrentPage(1); }}
-              placeholder="Select Working Model"
-              style={{ width: "100%" }}
-              filterOption={(input, option) => (option?.label as string ?? '').toLowerCase().includes(input.toLowerCase())}
-            />
-          </div>
-
-          {/* Skills */}
-          <div style={fieldGap}>
-            <label style={labelStyle}>Skills</label>
-            <Select
-              mode="multiple"
-              showSearch
-              allowClear
-              optionFilterProp="label"
-              filterOption={(input, option) =>
-                (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())
-              }
-              options={skillOptions}
-              value={selectedSkills}
-              onChange={(val) => { setSelectedSkills(val); setCurrentPage(1); }}
-              placeholder="Select skills..."
-              style={{ width: "100%" }}
-            />
-          </div>
-
-          {/* Salary Range */}
-          <div style={fieldGap}>
-            <label style={labelStyle}>
-              Salary Range (VND)
-              <span style={{ fontSize: "0.75rem", fontWeight: "normal", color: "#64748b", marginLeft: "8px" }}>
-                {`${salaryRange[0] === 0 ? "0" : `${salaryRange[0]}M`} - ${salaryRange[1] === 100 ? "100M+" : `${salaryRange[1]}M`}`}
-              </span>
-            </label>
-            <Slider
-              range
-              min={0}
-              max={100}
-              step={5}
-              value={salaryRange}
-              onChange={(val) => { setSalaryRange(val as [number, number]); setCurrentPage(1); }}
-              tooltip={{ formatter: (v) => `${v}M VND` }}
-            />
-          </div>
-
-          {/* Experience */}
-          <div style={fieldGap}>
-            <label style={labelStyle}>
-              Experience (Years)
-              <span style={{ fontSize: "0.75rem", fontWeight: "normal", color: "#64748b", marginLeft: "8px" }}>
-                {experienceRange[0]} - {experienceRange[1] === 10 ? "10+" : experienceRange[1]} years
-              </span>
-            </label>
-            <Slider
-              range
-              min={0}
-              max={10}
-              step={1}
-              value={experienceRange}
-              onChange={(val) => { setExperienceRange(val as [number, number]); setCurrentPage(1); }}
-              tooltip={{ formatter: (v) => `${v} yr` }}
-            />
-          </div>
-
-          {/* Expertise */}
-          <div style={fieldGap}>
-            <label style={labelStyle}>Expertise</label>
-            <Select
-              mode="multiple"
-              showSearch
-              allowClear
-              optionFilterProp="label"
-              filterOption={(input, option) =>
-                (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())
-              }
-              options={expertiseOptions}
-              value={selectedExpertises}
-              onChange={(val) => { setSelectedExpertises(val); setCurrentPage(1); }}
-              placeholder="Select expertises..."
-              style={{ width: "100%" }}
-            />
-          </div>
-
-          {/* Domain */}
-          <div style={{ marginBottom: 0 }}>
-            <label style={labelStyle}>Domain</label>
-            <Select
-              mode="multiple"
-              showSearch
-              allowClear
-              optionFilterProp="label"
-              filterOption={(input, option) =>
-                (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())
-              }
-              options={domainOptions}
-              value={selectedDomains}
-              onChange={(val) => { setSelectedDomains(val); setCurrentPage(1); }}
-              placeholder="Select domains..."
-              style={{ width: "100%" }}
-            />
-          </div>
+        background: settings.backgroundColorOverride || backgroundColor,
+        padding: `${settings.paddingTop || 64}px 40px ${settings.paddingBottom || 64}px`,
+      }}>
+        <div style={{ textAlign: "center", marginBottom: "36px" }}>
+          <h2 style={{ fontSize: "2rem", fontWeight: 700, color: textColor, marginBottom: "8px" }}>{headline}</h2>
         </div>
 
-        {/* ─── Job Listings ────────────────────────────────────── */}
-        <div style={{ flex: 1, minWidth: 0 }}>
-          {/* Search bar */}
-          <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
-            <input
-              style={{ ...inputStyle, flex: 1 }}
-              placeholder="Search by job title..."
-              value={searchName}
-              onChange={(e) => { setSearchName(e.target.value); setCurrentPage(1); }}
-            />
-          </div>
-
-          {/* Results count */}
-          <div style={{ fontSize: "0.8125rem", color: textColor, opacity: 0.5, marginBottom: "14px" }}>
-            {isLoading ? "Loading..." : `Showing ${paginatedJobs.length} / ${totalElements} jobs`}
-          </div>
-
-          {/* Loading state */}
-          {isLoading ? (
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-              {[1, 2, 3].map((i) => (
-                <div key={i} style={{
-                  background: "#fff", borderRadius: `${borderRadius}px`,
-                  padding: "20px 24px", boxShadow: shadowMap[shadow],
-                  border: "1px solid rgba(0,0,0,0.06)", height: "120px",
-                  animation: "pulse 1.5s ease-in-out infinite",
-                }}>
-                  <div style={{ width: "60%", height: 16, borderRadius: 4, background: "#f3f4f6", marginBottom: 10 }} />
-                  <div style={{ width: "40%", height: 12, borderRadius: 4, background: "#f3f4f6", marginBottom: 10 }} />
-                  <div style={{ width: "80%", height: 12, borderRadius: 4, background: "#f3f4f6" }} />
-                </div>
-              ))}
+        <div className="career-container" style={{ display: "flex", gap: "28px", margin: "0 auto", alignItems: "flex-start" }}>
+          {/* ─── Filter Sidebar ──────────────────────────────────── */}
+          <div style={{
+            width: "280px", flexShrink: 0,
+            background: "#fff", borderRadius: `${borderRadius}px`,
+            border: "1px solid #f0f0f0", boxShadow: shadowMap[shadow],
+            padding: "24px 20px",
+          }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span style={{ color: primaryColor, fontSize: "1rem" }}>▼</span>
+                <span style={{ fontSize: "1.125rem", fontWeight: 800, color: textColor }}>Filters</span>
+              </div>
+              <button onClick={handleReset} style={{
+                background: "none", border: "none", color: primaryColor,
+                fontSize: "0.8125rem", fontWeight: 600, cursor: "pointer",
+              }}>Reset</button>
             </div>
-          ) : (
-            /* Job cards */
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-              {paginatedJobs.length > 0 ? paginatedJobs.map((job) => (
-                <div key={job.id} style={{
-                  background: "#fff", borderRadius: `${borderRadius}px`,
-                  padding: "20px 24px", display: "flex", alignItems: "flex-start",
-                  gap: "16px", boxShadow: shadowMap[shadow],
-                  border: "1px solid rgba(0,0,0,0.06)", textAlign: "left",
-                }}>
-                  {/* Job details */}
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px", flexWrap: "wrap" }}>
-                      <a 
+
+            {/* Location */}
+            <div style={fieldGap}>
+              <label style={labelStyle}>Location</label>
+              <input style={inputStyle} placeholder="Enter Location" value={searchLocation}
+                onChange={(e) => { setSearchLocation(e.target.value); setCurrentPage(1); }} />
+            </div>
+
+            {/* Job Level */}
+            <div style={fieldGap}>
+              <label style={labelStyle}>Job Level</label>
+              <Select
+                showSearch
+                allowClear
+                options={jobLevelOptions}
+                value={selectedLevel || undefined}
+                onChange={(val) => { setSelectedLevel(val ?? ""); setCurrentPage(1); }}
+                placeholder="Select Job Level"
+                style={{ width: "100%" }}
+                filterOption={(input, option) => (option?.label as string ?? '').toLowerCase().includes(input.toLowerCase())}
+              />
+            </div>
+
+            {/* Working Model */}
+            <div style={fieldGap}>
+              <label style={labelStyle}>Working Model</label>
+              <Select
+                showSearch
+                allowClear
+                options={workingModelOptions}
+                value={selectedModel || undefined}
+                onChange={(val) => { setSelectedModel(val ?? ""); setCurrentPage(1); }}
+                placeholder="Select Working Model"
+                style={{ width: "100%" }}
+                filterOption={(input, option) => (option?.label as string ?? '').toLowerCase().includes(input.toLowerCase())}
+              />
+            </div>
+
+            {/* Skills */}
+            <div style={fieldGap}>
+              <label style={labelStyle}>Skills</label>
+              <Select
+                mode="multiple"
+                showSearch
+                allowClear
+                optionFilterProp="label"
+                filterOption={(input, option) =>
+                  (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())
+                }
+                options={skillOptions}
+                value={selectedSkills}
+                onChange={(val) => { setSelectedSkills(val); setCurrentPage(1); }}
+                placeholder="Select skills..."
+                style={{ width: "100%" }}
+              />
+            </div>
+
+            {/* Salary Range */}
+            <div style={fieldGap}>
+              <label style={labelStyle}>
+                Salary Range (VND)
+                <span style={{ fontSize: "0.75rem", fontWeight: "normal", color: "#64748b", marginLeft: "8px" }}>
+                  {`${salaryRange[0] === 0 ? "0" : `${salaryRange[0]}M`} - ${salaryRange[1] === 100 ? "100M+" : `${salaryRange[1]}M`}`}
+                </span>
+              </label>
+              <Slider
+                range
+                min={0}
+                max={100}
+                step={5}
+                value={salaryRange}
+                onChange={(val) => { setSalaryRange(val as [number, number]); setCurrentPage(1); }}
+                tooltip={{ formatter: (v) => `${v}M VND` }}
+              />
+            </div>
+
+            {/* Experience */}
+            <div style={fieldGap}>
+              <label style={labelStyle}>
+                Experience (Years)
+                <span style={{ fontSize: "0.75rem", fontWeight: "normal", color: "#64748b", marginLeft: "8px" }}>
+                  {experienceRange[0]} - {experienceRange[1] === 10 ? "10+" : experienceRange[1]} years
+                </span>
+              </label>
+              <Slider
+                range
+                min={0}
+                max={10}
+                step={1}
+                value={experienceRange}
+                onChange={(val) => { setExperienceRange(val as [number, number]); setCurrentPage(1); }}
+                tooltip={{ formatter: (v) => `${v} yr` }}
+              />
+            </div>
+
+            {/* Expertise */}
+            <div style={fieldGap}>
+              <label style={labelStyle}>Expertise</label>
+              <Select
+                mode="multiple"
+                showSearch
+                allowClear
+                optionFilterProp="label"
+                filterOption={(input, option) =>
+                  (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())
+                }
+                options={expertiseOptions}
+                value={selectedExpertises}
+                onChange={(val) => { setSelectedExpertises(val); setCurrentPage(1); }}
+                placeholder="Select expertises..."
+                style={{ width: "100%" }}
+              />
+            </div>
+
+            {/* Domain */}
+            <div style={{ marginBottom: 0 }}>
+              <label style={labelStyle}>Domain</label>
+              <Select
+                mode="multiple"
+                showSearch
+                allowClear
+                optionFilterProp="label"
+                filterOption={(input, option) =>
+                  (option?.label ?? "").toString().toLowerCase().includes(input.toLowerCase())
+                }
+                options={domainOptions}
+                value={selectedDomains}
+                onChange={(val) => { setSelectedDomains(val); setCurrentPage(1); }}
+                placeholder="Select domains..."
+                style={{ width: "100%" }}
+              />
+            </div>
+          </div>
+
+          {/* ─── Job Listings ────────────────────────────────────── */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            {/* Search bar */}
+            <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+              <input
+                style={{ ...inputStyle, flex: 1 }}
+                placeholder="Search by job title..."
+                value={searchName}
+                onChange={(e) => { setSearchName(e.target.value); setCurrentPage(1); }}
+              />
+            </div>
+
+            {/* Results count */}
+            <div style={{ fontSize: "0.8125rem", color: textColor, opacity: 0.5, marginBottom: "14px" }}>
+              {isLoading ? "Loading..." : `Showing ${paginatedJobs.length} / ${totalElements} jobs`}
+            </div>
+
+            {/* Loading state */}
+            {isLoading ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                {[1, 2, 3].map((i) => (
+                  <div key={i} style={{
+                    background: "#fff", borderRadius: `${borderRadius}px`,
+                    padding: "20px 24px", boxShadow: shadowMap[shadow],
+                    border: "1px solid rgba(0,0,0,0.06)", height: "120px",
+                    animation: "pulse 1.5s ease-in-out infinite",
+                  }}>
+                    <div style={{ width: "60%", height: 16, borderRadius: 4, background: "#f3f4f6", marginBottom: 10 }} />
+                    <div style={{ width: "40%", height: 12, borderRadius: 4, background: "#f3f4f6", marginBottom: 10 }} />
+                    <div style={{ width: "80%", height: 12, borderRadius: 4, background: "#f3f4f6" }} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              /* Job cards */
+              <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                {paginatedJobs.length > 0 ? paginatedJobs.map((job) => (
+                  <div key={job.id} style={{
+                    background: "#fff", borderRadius: `${borderRadius}px`,
+                    padding: "20px 24px", display: "flex", alignItems: "flex-start",
+                    gap: "16px", boxShadow: shadowMap[shadow],
+                    border: "1px solid rgba(0,0,0,0.06)", textAlign: "left",
+                  }}>
+                    {/* Job details */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px", flexWrap: "wrap" }}>
+                        <a
+                          onClick={() => handleViewDetail(job)}
+                          style={{ fontSize: "0.9375rem", fontWeight: 700, color: textColor, cursor: "pointer", textDecoration: "none" }}
+                        >
+                          {job.name}
+                        </a>
+                        {job.isHighlight && (
+                          <span style={{
+                            padding: "1px 8px", borderRadius: "4px", fontSize: "0.625rem",
+                            fontWeight: 700, background: "#FEF2F2", color: "#EF4444",
+                            border: "1px solid #FECACA",
+                          }}>🔥 HOT</span>
+                        )}
+                      </div>
+
+                      {job.company?.name && (
+                        <div style={{ fontSize: "0.8125rem", color: textColor, opacity: 0.6, marginBottom: "6px" }}>
+                          {job.company.name}
+                        </div>
+                      )}
+
+                      <div style={{ fontSize: "0.75rem", color: textColor, opacity: 0.5, marginBottom: "8px", display: "flex", gap: "12px", flexWrap: "wrap" }}>
+                        {formatLocation(job) && <span>{formatLocation(job)}</span>}
+                        {job.experienceTime !== undefined && job.experienceTime !== null && (
+                          <span>{job.experienceTime} years</span>
+                        )}
+                        {job.workingModel && <span>{WORKING_MODEL_MAP[job.workingModel] || job.workingModel}</span>}
+                        {job.jobLevel && <span>{JOB_LEVEL_MAP[job.jobLevel] || job.jobLevel}</span>}
+                      </div>
+
+                      <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+                        {job.skills?.map((skill) => (
+                          <span key={skill.name} style={{
+                            padding: "2px 10px", borderRadius: "4px", fontSize: "0.6875rem",
+                            fontWeight: 500, background: `${primaryColor}08`, color: primaryColor,
+                            border: `1px solid ${primaryColor}20`,
+                          }}>{skill.name}</span>
+                        ))}
+                      </div>
+
+                      {job.uploadTime && (
+                        <div style={{ fontSize: "0.6875rem", color: textColor, opacity: 0.35, marginTop: "8px" }}>
+                          Posted {new Date(job.uploadTime).toLocaleDateString()}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Salary */}
+                    <div style={{ textAlign: "right", flexShrink: 0 }}>
+                      <div style={{ fontSize: "0.875rem", fontWeight: 700, color: primaryColor, whiteSpace: "nowrap" }}>
+                        {formatSalary(job.salaryStart, job.salaryEnd)}
+                      </div>
+                      <button
                         onClick={() => handleViewDetail(job)}
-                        style={{ fontSize: "0.9375rem", fontWeight: 700, color: textColor, cursor: "pointer", textDecoration: "none" }}
-                      >
-                        {job.name}
-                      </a>
-                      {job.isHighlight && (
-                        <span style={{
-                          padding: "1px 8px", borderRadius: "4px", fontSize: "0.625rem",
-                          fontWeight: 700, background: "#FEF2F2", color: "#EF4444",
-                          border: "1px solid #FECACA",
-                        }}>🔥 HOT</span>
-                      )}
+                        style={{
+                          marginTop: "8px", padding: "6px 16px", fontSize: "0.75rem",
+                          borderRadius: `${borderRadius}px`, fontWeight: 600,
+                          cursor: "pointer", transition: "all 0.2s",
+                          background: "transparent", color: primaryColor,
+                          border: `1.5px solid ${primaryColor}`, display: "block",
+                          width: "140px", marginLeft: "auto", textAlign: "center",
+                        }}
+                      >View Detail</button>
+                      <button
+                        onClick={() => handleApplyClick(job)}
+                        style={{
+                          ...(btnStyles[buttonStyle] || btnStyles.flat),
+                          marginTop: "6px", padding: "6px 16px", fontSize: "0.75rem",
+                          display: "block", width: "140px", marginLeft: "auto", textAlign: "center",
+                        }}
+                      >Apply Now</button>
                     </div>
-
-                    {job.company?.name && (
-                      <div style={{ fontSize: "0.8125rem", color: textColor, opacity: 0.6, marginBottom: "6px" }}>
-                        {job.company.name}
-                      </div>
-                    )}
-
-                    <div style={{ fontSize: "0.75rem", color: textColor, opacity: 0.5, marginBottom: "8px", display: "flex", gap: "12px", flexWrap: "wrap" }}>
-                      {formatLocation(job) && <span>{formatLocation(job)}</span>}
-                      {job.experienceTime !== undefined && job.experienceTime !== null && (
-                        <span>{job.experienceTime} years</span>
-                      )}
-                      {job.workingModel && <span>{WORKING_MODEL_MAP[job.workingModel] || job.workingModel}</span>}
-                      {job.jobLevel && <span>{JOB_LEVEL_MAP[job.jobLevel] || job.jobLevel}</span>}
-                    </div>
-
-                    <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                      {job.skills?.map((skill) => (
-                        <span key={skill.name} style={{
-                          padding: "2px 10px", borderRadius: "4px", fontSize: "0.6875rem",
-                          fontWeight: 500, background: `${primaryColor}08`, color: primaryColor,
-                          border: `1px solid ${primaryColor}20`,
-                        }}>{skill.name}</span>
-                      ))}
-                    </div>
-
-                    {job.uploadTime && (
-                      <div style={{ fontSize: "0.6875rem", color: textColor, opacity: 0.35, marginTop: "8px" }}>
-                        Posted {new Date(job.uploadTime).toLocaleDateString()}
-                      </div>
-                    )}
                   </div>
-
-                  {/* Salary */}
-                  <div style={{ textAlign: "right", flexShrink: 0 }}>
-                    <div style={{ fontSize: "0.875rem", fontWeight: 700, color: primaryColor, whiteSpace: "nowrap" }}>
-                      {formatSalary(job.salaryStart, job.salaryEnd)}
-                    </div>
-                    <button
-                      onClick={() => handleViewDetail(job)}
-                      style={{
-                        marginTop: "8px", padding: "6px 16px", fontSize: "0.75rem",
-                        borderRadius: `${borderRadius}px`, fontWeight: 600,
-                        cursor: "pointer", transition: "all 0.2s",
-                        background: "transparent", color: primaryColor,
-                        border: `1.5px solid ${primaryColor}`, display: "block",
-                        width: "140px", marginLeft: "auto", textAlign: "center",
-                      }}
-                    >View Detail</button>
-                    <button
-                      onClick={() => handleApplyClick(job)}
-                      style={{
-                        ...(btnStyles[buttonStyle] || btnStyles.flat),
-                        marginTop: "6px", padding: "6px 16px", fontSize: "0.75rem",
-                        display: "block", width: "140px", marginLeft: "auto", textAlign: "center",
-                      }}
-                    >Apply Now</button>
+                )) : (
+                  <div style={{ textAlign: "center", padding: "48px 20px", color: textColor, opacity: 0.4, fontSize: "0.875rem" }}>
+                    No matching jobs found.
                   </div>
-                </div>
-              )) : (
-                <div style={{ textAlign: "center", padding: "48px 20px", color: textColor, opacity: 0.4, fontSize: "0.875rem" }}>
-                  No matching jobs found.
-                </div>
-              )}
-            </div>
-          )}
+                )}
+              </div>
+            )}
 
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "6px", marginTop: "24px" }}>
-              <button
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                style={{
-                  width: 32, height: 32, borderRadius: `${borderRadius}px`,
-                  border: "1px solid #e5e7eb", background: "#fff",
-                  cursor: currentPage === 1 ? "default" : "pointer",
-                  opacity: currentPage === 1 ? 0.3 : 1,
-                  fontSize: "0.875rem", color: textColor, display: "flex",
-                  alignItems: "center", justifyContent: "center",
-                }}
-              >‹</button>
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "6px", marginTop: "24px" }}>
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  style={{
+                    width: 32, height: 32, borderRadius: `${borderRadius}px`,
+                    border: "1px solid #e5e7eb", background: "#fff",
+                    cursor: currentPage === 1 ? "default" : "pointer",
+                    opacity: currentPage === 1 ? 0.3 : 1,
+                    fontSize: "0.875rem", color: textColor, display: "flex",
+                    alignItems: "center", justifyContent: "center",
+                  }}
+                >‹</button>
 
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <button key={page} onClick={() => setCurrentPage(page)} style={{
-                  width: 32, height: 32, borderRadius: `${borderRadius}px`,
-                  border: page === currentPage ? "none" : "1px solid #e5e7eb",
-                  background: page === currentPage ? primaryColor : "#fff",
-                  color: page === currentPage ? "#fff" : textColor,
-                  fontSize: "0.8125rem", fontWeight: 600, cursor: "pointer",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                }}>{page}</button>
-              ))}
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button key={page} onClick={() => setCurrentPage(page)} style={{
+                    width: 32, height: 32, borderRadius: `${borderRadius}px`,
+                    border: page === currentPage ? "none" : "1px solid #e5e7eb",
+                    background: page === currentPage ? primaryColor : "#fff",
+                    color: page === currentPage ? "#fff" : textColor,
+                    fontSize: "0.8125rem", fontWeight: 600, cursor: "pointer",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                  }}>{page}</button>
+                ))}
 
-              <button
-                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
-                style={{
-                  width: 32, height: 32, borderRadius: `${borderRadius}px`,
-                  border: "1px solid #e5e7eb", background: "#fff",
-                  cursor: currentPage === totalPages ? "default" : "pointer",
-                  opacity: currentPage === totalPages ? 0.3 : 1,
-                  fontSize: "0.875rem", color: textColor, display: "flex",
-                  alignItems: "center", justifyContent: "center",
-                }}
-              >›</button>
-            </div>
-          )}
+                <button
+                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  style={{
+                    width: 32, height: 32, borderRadius: `${borderRadius}px`,
+                    border: "1px solid #e5e7eb", background: "#fff",
+                    cursor: currentPage === totalPages ? "default" : "pointer",
+                    opacity: currentPage === totalPages ? 0.3 : 1,
+                    fontSize: "0.875rem", color: textColor, display: "flex",
+                    alignItems: "center", justifyContent: "center",
+                  }}
+                >›</button>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
 
-      <ApplyJobModal 
-        isOpen={applyModalOpen}
-        onClose={handleModalClose}
-        job={applyingJob}
-        primaryColor={primaryColor}
-      />
+        <ApplyJobModal
+          isOpen={applyModalOpen}
+          onClose={handleModalClose}
+          job={applyingJob}
+          primaryColor={primaryColor}
+        />
 
-    </section>
+      </section>
     </ConfigProvider>
   );
 }

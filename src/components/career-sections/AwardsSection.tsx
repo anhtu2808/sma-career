@@ -37,9 +37,9 @@ export default function AwardsSection({ theme, sectionProps = {}, settings = {} 
         {headline}
       </h2>
 
-      <div style={{
+      <div className="career-container" style={{
         display: 'flex', gap: '28px', justifyContent: 'center', flexWrap: 'wrap',
-        maxWidth: '1280px', margin: '0 auto',
+        margin: '0 auto',
       }}>
         {items.filter(item => item.isVisible !== false).map((item, i) => (
           <div key={i} style={{
