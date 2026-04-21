@@ -32,7 +32,7 @@ export default function CTASection({ theme, sectionProps = {}, settings = {} }: 
       }} />
 
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#fff', marginBottom: '12px' }}>
+        <h2 style={{ fontSize: '2rem', fontWeight: 800, color: (settings.textColorOverride as string) || (settings.backgroundColorOverride === '#fff' ? theme.textColor : '#fff'), marginBottom: '12px' }}>
           {headline}
         </h2>
         {ctaText && (

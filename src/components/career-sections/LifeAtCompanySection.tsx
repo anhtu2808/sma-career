@@ -49,7 +49,7 @@ export default function LifeAtCompanySection({ theme, sectionProps = {}, setting
         display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
         margin: '0 auto 40px',
       }}>
-        <h2 style={{ fontSize: '2rem', fontWeight: 700, color: textColor, margin: 0 }}>
+        <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: (settings.textColorOverride as string) || textColor, margin: 0 }}>
           {headline}
         </h2>
         {navLink.isVisible !== false && navLink.text && (
