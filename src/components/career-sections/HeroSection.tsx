@@ -110,14 +110,14 @@ export default function HeroSection({ theme, sectionProps = {}, settings = {} }:
 
       <div className="career-container" style={{ position: 'relative', zIndex: 1, margin: '0 auto', width: '100%' }}>
         <h1 style={{
-          fontSize: '3.125rem', fontWeight: 800, color: settings.textColorOverride || '#fff',
-          lineHeight: 1.2, marginBottom: '20px', letterSpacing: '-0.5px', whiteSpace: 'nowrap',
+          fontSize: '3.125rem', fontWeight: 800, color: settings.textColorOverride || ((settings.backgroundColorOverride === '#FFFFFF' || theme.backgroundColor === '#FFFFFF') && !backgroundUrl ? theme.textColor : '#fff'),
+          lineHeight: 1.2, marginBottom: '20px', letterSpacing: '-0.5px',
         }}>
           {headline}
         </h1>
 
         <p style={{
-          fontSize: '1.125rem', color: settings.textColorOverride || 'rgba(255,255,255,0.85)',
+          fontSize: '1.125rem', color: settings.textColorOverride || ((settings.backgroundColorOverride === '#FFFFFF' || theme.backgroundColor === '#FFFFFF') && !backgroundUrl ? theme.textColor : 'rgba(255,255,255,0.85)'),
           maxWidth: '560px', margin: '0 auto 40px', lineHeight: 1.7,
           opacity: 0.8,
         }}>

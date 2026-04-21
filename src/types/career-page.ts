@@ -36,6 +36,8 @@ export interface HeaderConfig {
   ctaButton?: CTAButton;
   companyName?: string;
   _visible?: boolean;
+  backgroundColorOverride?: string;
+  textColorOverride?: string;
   [key: string]: unknown;
 }
 
@@ -90,6 +92,7 @@ export interface LayoutSectionSettings {
   backgroundColorOverride?: string;
   height?: number;
   textColorOverride?: string;
+  patternColorOverride?: string;
   [key: string]: unknown;
 }
 
