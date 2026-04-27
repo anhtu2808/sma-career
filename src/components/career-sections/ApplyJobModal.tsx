@@ -17,9 +17,10 @@ interface ApplyJobModalProps {
   onClose: () => void;
   job: JobApiItem | JobDetailData | null;
   primaryColor: string;
+  borderRadius?: number;
 }
 
-export default function ApplyJobModal({ isOpen, onClose, job, primaryColor }: ApplyJobModalProps) {
+export default function ApplyJobModal({ isOpen, onClose, job, primaryColor, borderRadius = 8 }: ApplyJobModalProps) {
   const [form] = Form.useForm();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -157,7 +158,7 @@ export default function ApplyJobModal({ isOpen, onClose, job, primaryColor }: Ap
             {!selectedFile ? (
               <div style={{
                 width: "100%", padding: "18px 24px", border: "1px dashed #cbd5e1",
-                borderRadius: "10px", background: "#f8fafc", cursor: "pointer",
+                borderRadius: `${borderRadius}px`, background: "#f8fafc", cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 gap: 10, color: "#334155", transition: "all 0.2s"
               }}
@@ -170,7 +171,7 @@ export default function ApplyJobModal({ isOpen, onClose, job, primaryColor }: Ap
               <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                 <div style={{
                   width: "100%", padding: "14px 20px", border: "1px dashed #cbd5e1",
-                  borderRadius: "10px", background: "#f8fafc", cursor: "pointer",
+                  borderRadius: `${borderRadius}px`, background: "#f8fafc", cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   gap: 8, color: "#334155", transition: "all 0.2s"
                 }}
@@ -182,7 +183,7 @@ export default function ApplyJobModal({ isOpen, onClose, job, primaryColor }: Ap
                 </div>
                 <div style={{
                   width: "100%", padding: "14px 20px", border: "1px solid #f97316",
-                  background: "#fff7ed", borderRadius: "10px", display: "flex",
+                  background: "#fff7ed", borderRadius: `${borderRadius}px`, display: "flex",
                   alignItems: "center", justifyContent: "space-between", cursor: "default",
                   transition: "all 0.2s"
                 }}>

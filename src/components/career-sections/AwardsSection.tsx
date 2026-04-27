@@ -45,7 +45,7 @@ export default function AwardsSection({ theme, sectionProps = {}, settings = {} 
 
       <div style={{ position: 'relative', zIndex: 1, maxWidth: '1280px', margin: '0 auto' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '56px' }}>
-            <div style={{ display: 'inline-block', padding: '6px 16px', background: `${primaryColor}10`, border: `1px solid ${primaryColor}30`, color: primaryColor, borderRadius: '24px', fontSize: '0.875rem', fontWeight: 700, marginBottom: '20px', textTransform: 'uppercase', letterSpacing: '1px' }}>
+            <div style={{ display: 'inline-block', padding: '6px 16px', background: `${primaryColor}10`, border: `1px solid ${primaryColor}30`, color: primaryColor, borderRadius: `${borderRadius}px`, fontSize: '0.875rem', fontWeight: 700, marginBottom: '20px', textTransform: 'uppercase', letterSpacing: '1px' }}>
               Achievements
             </div>
             <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: (settings.textColorOverride as string) || textColor, margin: 0, lineHeight: 1.25 }}>
@@ -95,7 +95,7 @@ export default function AwardsSection({ theme, sectionProps = {}, settings = {} 
                 <div style={{
                   fontSize: '0.875rem', fontWeight: 700, color: primaryColor,
                   background: `${primaryColor}10`,
-                  padding: '6px 20px', borderRadius: '24px',
+                  padding: '6px 20px', borderRadius: `${borderRadius}px`,
                   letterSpacing: '0.5px'
                 }}>
                   {item.year}

@@ -503,7 +503,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                           </a>
                           {job.isHighlight && (
                             <span style={{
-                              padding: "1px 8px", borderRadius: "4px", fontSize: "0.625rem",
+                              padding: "1px 8px", borderRadius: `${borderRadius}px`, fontSize: "0.625rem",
                               fontWeight: 700, background: "#FEF2F2", color: "#EF4444",
                               border: "1px solid #FECACA",
                             }}>🔥 HOT</span>
@@ -528,7 +528,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
                         <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
                           {job.skills?.map((skill) => (
                             <span key={skill.name} style={{
-                              padding: "2px 10px", borderRadius: "4px", fontSize: "0.6875rem",
+                              padding: "2px 10px", borderRadius: `${borderRadius}px`, fontSize: "0.6875rem",
                               fontWeight: 500, background: `${primaryColor}08`, color: primaryColor,
                               border: `1px solid ${primaryColor}20`,
                             }}>{skill.name}</span>
@@ -627,6 +627,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
           onClose={handleModalClose}
           job={applyingJob}
           primaryColor={primaryColor}
+          borderRadius={borderRadius}
         />
 
       </section>

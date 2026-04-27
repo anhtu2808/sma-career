@@ -92,7 +92,7 @@ export default function EVPSection({ theme, sectionProps = {}, settings = {} }: 
               onMouseLeave={() => setHoveredIndex(null)}
               style={{
                 background: '#FFFFFF',
-                borderRadius: '24px',
+                borderRadius: `${borderRadius}px`,
                 padding: '32px 24px',
                 textAlign: 'center',
                 boxShadow: hoveredIndex === i ? '0 30px 60px rgba(0,0,0,0.2)' : '0 10px 25px rgba(0,0,0,0.1)',
@@ -110,7 +110,7 @@ export default function EVPSection({ theme, sectionProps = {}, settings = {} }: 
                 width: '80px', height: '80px',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 background: `${primaryColor}10`,
-                borderRadius: '20px',
+                borderRadius: `${borderRadius === 0 ? 0 : Math.max(4, borderRadius - 4)}px`,
                 margin: '0 auto 20px',
                 transition: 'all 0.4s ease',
                 transform: hoveredIndex === i ? 'scale(1.1) rotate(10deg)' : 'scale(1)'
