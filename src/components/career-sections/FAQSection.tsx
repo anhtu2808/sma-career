@@ -38,19 +38,19 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
     }}>
       <div className="career-container" style={{ maxWidth: '900px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-          <h2 style={{ 
-            fontSize: '2.5rem', 
-            fontWeight: 800, 
-            color: (settings.textColorOverride as string) || textColor, 
+          <h2 style={{
+            fontSize: '2.5rem',
+            fontWeight: 800,
+            color: (settings.textColorOverride as string) || textColor,
             margin: '0 0 16px',
             letterSpacing: '-1px'
           }}>
             {headline}
           </h2>
-          <div style={{ 
-            width: '60px', 
-            height: '4px', 
-            background: primaryColor, 
+          <div style={{
+            width: '60px',
+            height: '4px',
+            background: primaryColor,
             margin: '0 auto',
             borderRadius: '2px'
           }} />
@@ -60,14 +60,14 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
           {items.filter(item => item.isVisible !== false).map((item, i) => {
             const isOpen = openIndex === i;
             const isHovered = hoveredIndex === i;
-            
+
             return (
               <div
                 key={i}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 style={{
-                  borderRadius: '20px',
+                  borderRadius: `${borderRadius}px`,
                   background: '#fff',
                   boxShadow: isOpen ? '0 20px 40px rgba(0,0,0,0.08)' : (isHovered ? '0 10px 30px rgba(0,0,0,0.06)' : '0 4px 12px rgba(0,0,0,0.03)'),
                   border: `1px solid ${isOpen ? primaryColor + '20' : 'rgba(0,0,0,0.05)'}`,
@@ -79,21 +79,21 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : i)}
                   style={{
-                    width: '100%', 
+                    width: '100%',
                     padding: '24px 32px',
                     background: 'transparent',
-                    border: 'none', 
+                    border: 'none',
                     cursor: 'pointer',
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
+                    display: 'flex',
+                    justifyContent: 'space-between',
                     alignItems: 'center',
                     textAlign: 'left',
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                    <div style={{ 
-                      width: '36px', height: '36px', 
-                      borderRadius: '10px', 
+                    <div style={{
+                      width: '36px', height: '36px',
+                      borderRadius: `${borderRadius === 0 ? 0 : Math.max(4, borderRadius - 6)}px`,
                       background: isOpen ? primaryColor : (isHovered ? primaryColor + '15' : 'rgba(0,0,0,0.04)'),
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       color: isOpen ? '#fff' : (isHovered ? primaryColor : 'rgba(0,0,0,0.4)'),
@@ -102,9 +102,9 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
                     }}>
                       <FontAwesomeIcon icon={resolveIcon('quiz')} style={{ fontSize: '1.2rem' }} />
                     </div>
-                    <span style={{ 
-                      fontSize: '1.25rem', 
-                      fontWeight: 700, 
+                    <span style={{
+                      fontSize: '1.25rem',
+                      fontWeight: 700,
                       color: isOpen ? primaryColor : ((settings.textColorOverride as string) || textColor),
                       transition: 'color 0.3s ease'
                     }}>
@@ -124,7 +124,7 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
                     <FontAwesomeIcon icon={resolveIcon('expand_more')} />
                   </div>
                 </button>
-                
+
                 {/* SMOOTH EXPANSION CONTAINER */}
                 <div style={{
                   maxHeight: isOpen ? '500px' : '0',
@@ -134,9 +134,9 @@ export default function FAQSection({ theme, sectionProps = {}, settings = {} }: 
                 }}>
                   <div style={{
                     padding: '0 32px 32px 88px',
-                    fontSize: '1rem', 
-                    color: (settings.textColorOverride as string) || textColor, 
-                    opacity: 0.8, 
+                    fontSize: '1rem',
+                    color: (settings.textColorOverride as string) || textColor,
+                    opacity: 0.8,
                     lineHeight: 1.8,
                   }}>
                     {item.answer}

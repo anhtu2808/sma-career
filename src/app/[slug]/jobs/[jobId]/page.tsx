@@ -19,8 +19,8 @@ function flattenTheme(tc: ThemeConfig): FlatTheme {
     backgroundColor: tc.colors?.background || "#ffffff",
     textColor: tc.colors?.text || "#0f172a",
     fontFamily: tc.typography?.fontFamily || "Inter",
-    baseFontSize: tc.typography?.baseFontSize || 16,
-    borderRadius: tc.styling?.borderRadius || 8,
+    baseFontSize: tc.typography?.baseFontSize ?? 16,
+    borderRadius: tc.styling?.borderRadius ?? 8,
     buttonStyle: tc.styling?.buttonStyle || "solid",
     shadow: tc.effects?.shadow || "subtle",
     spacing: tc.effects?.spacing || "normal",
@@ -29,7 +29,7 @@ function flattenTheme(tc: ThemeConfig): FlatTheme {
 
 export async function generateMetadata({ params }: JobPageProps): Promise<Metadata> {
   const { slug, jobId } = await params;
-  
+
   // Try to fetch career page data for favicon
   const pageData = await getCareerPageBySlug(slug).catch(() => null);
   const iconUrl = pageData?.metaConfig?.faviconUrl || pageData?.headerConfig?.logoUrl || undefined;
@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
 
 export default async function JobDetailPage({ params }: JobPageProps) {
   const { slug, jobId } = await params;
-  
+
   // Fetch site configuration and theme
   const pageData = await getCareerPageBySlug(slug);
   if (!pageData) {
@@ -78,7 +78,7 @@ export default async function JobDetailPage({ params }: JobPageProps) {
   const companyName = (pageData.headerConfig.companyName as string) || (pageData.footerConfig.companyName as string) || 'Company';
 
   // dynamically load google font if it's not Inter
-  const fontUrl = theme.fontFamily && theme.fontFamily !== "Inter" 
+  const fontUrl = theme.fontFamily && theme.fontFamily !== "Inter"
     ? `https://fonts.googleapis.com/css2?family=${theme.fontFamily.replace(/\s+/g, '+')}:wght@300;400;500;600;700;800&display=swap`
     : null;
 
@@ -101,24 +101,24 @@ export default async function JobDetailPage({ params }: JobPageProps) {
           flexDirection: "column",
         }}
       >
-      {/* Header */}
-      {showHeader && (
-        <HeaderSection
-          theme={theme}
-          headerConfig={pageData.headerConfig}
-          companyName={companyName}
-          slug={slug}
-        />
-      )}
+        {/* Header */}
+        {showHeader && (
+          <HeaderSection
+            theme={theme}
+            headerConfig={pageData.headerConfig}
+            companyName={companyName}
+            slug={slug}
+          />
+        )}
 
-      {/* Main Content Area */}
-      <main style={{ flex: 1, position: "relative", zIndex: 1, background: "#f8fafc" }}>
-         <JobDetailView slug={slug} jobDetail={jobDetail} theme={theme} />
-      </main>
+        {/* Main Content Area */}
+        <main style={{ flex: 1, position: "relative", zIndex: 1, background: "#f8fafc" }}>
+          <JobDetailView slug={slug} jobDetail={jobDetail} theme={theme} />
+        </main>
 
-      {/* Footer */}
-      {showFooter && <FooterSection theme={theme} footerConfig={pageData.footerConfig} />}
-    </div>
+        {/* Footer */}
+        {showFooter && <FooterSection theme={theme} footerConfig={pageData.footerConfig} />}
+      </div>
     </>
   );
 }
