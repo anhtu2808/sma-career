@@ -62,13 +62,26 @@ export default async function CareerPage({ params }: PageProps) {
 
   const theme = flattenTheme(data.themeConfig);
 
+  // dynamically load google font if it's not Inter
+  const fontUrl = theme.fontFamily && theme.fontFamily !== "Inter"
+    ? `https://fonts.googleapis.com/css2?family=${theme.fontFamily.replace(/\s+/g, '+')}:wght@300;400;500;600;700;800&display=swap`
+    : null;
+
   return (
-    <CareerPageRenderer
-      theme={theme}
-      layoutConfig={data.layoutConfig}
-      headerConfig={data.headerConfig}
-      footerConfig={data.footerConfig}
-      companyId={data.companyId}
-    />
+    <>
+      {fontUrl && <link rel="stylesheet" href={fontUrl} />}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          :root { font-size: ${theme.baseFontSize}px; }
+        `
+      }} />
+      <CareerPageRenderer
+        theme={theme}
+        layoutConfig={data.layoutConfig}
+        headerConfig={data.headerConfig}
+        footerConfig={data.footerConfig}
+        companyId={data.companyId}
+      />
+    </>
   );
 }
