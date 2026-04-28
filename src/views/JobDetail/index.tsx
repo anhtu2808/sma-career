@@ -41,12 +41,12 @@ export default function JobDetailView({ slug, jobDetail, theme }: JobDetailViewP
   };
 
   return (
-    <ConfigProvider theme={{ token: { colorPrimary: primaryColor, borderRadius } }}>
+    <ConfigProvider theme={{ token: { colorPrimary: primaryColor, borderRadius, fontFamily: (!theme.fontFamily || theme.fontFamily === "Inter") ? "var(--font-inter), sans-serif" : `'${theme.fontFamily}', sans-serif` } }}>
       <div style={{
         maxWidth: 1200,
         margin: "0 auto",
         padding: "40px 20px",
-        fontFamily: `'${theme.fontFamily || "Inter"}', sans-serif`,
+        fontFamily: (!theme.fontFamily || theme.fontFamily === "Inter") ? "var(--font-inter), sans-serif" : `'${theme.fontFamily}', sans-serif`,
         color: textColor
       }}>
         {/* Main Card */}
