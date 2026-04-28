@@ -219,7 +219,7 @@ export default function FeaturedJobsSection({ theme, sectionProps = {}, settings
       token: {
         colorPrimary: primaryColor,
         borderRadius: borderRadius,
-        fontFamily: theme.fontFamily,
+        fontFamily: (!theme.fontFamily || theme.fontFamily === "Inter") ? "var(--font-inter), sans-serif" : `'${theme.fontFamily}', sans-serif`,
       }
     }}>
       <section id="jobs-section" style={{
