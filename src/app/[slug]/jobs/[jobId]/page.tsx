@@ -84,9 +84,9 @@ export default async function JobDetailPage({ params }: JobPageProps) {
 
   return (
     <>
+      {fontUrl && <link rel="stylesheet" href={fontUrl} />}
       <style dangerouslySetInnerHTML={{
         __html: `
-          ${fontUrl ? `@import url('${fontUrl}');` : ''}
           :root { font-size: ${theme.baseFontSize}px; }
         `
       }} />
